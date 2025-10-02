@@ -63,6 +63,20 @@
 .search-container button:hover {
   background: #003366;
 }
+/* Botão Snippets */
+.button-home button {
+  background: #004c99;
+  border: none;
+  color: white;
+  padding: 8px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.button-home button:hover {
+  background: #003366;
+}
 
 /* Botões da direita */
 .buttons-right {
