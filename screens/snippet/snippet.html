@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snippets</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header class="navbar">
+        <!-- Grupo central: Logo + Pesquisa + Snippets -->
+        <div class="left-group">
+            <div class="logo">
+                <img src="../../img/Logo.png" alt="A fox with closed eyes as Logo">
+            </div>
+
+            <div class="search-container">
+                <input type="text" placeholder="Pesquisar...">
+                <button>🔍</button>
+            </div>
+
+            <div class="button-home">
+                <button>Snippets</button>
+            </div>
+        </div>
+
+        <!-- Grupo da direita -->
+        <div class="buttons-right">
+            <button>Login</button>
+            <button>Registrar</button>
+        </div>
+    </header>
+
+    <div id="main">
+        <div id="sub-header">
+            <button> Voltar </button>
+            <div id="gray-bar"></div>
+            <h1 id="snippet-title">Como usar a API do Google tradutor</h1>
+        </div>
+        <div id="content-row">
+            <div id="snippet-summary">
+                <div id="summary-top">
+                    <div id="user">
+                        <img src="../../img/foto_latino_ware.png" alt="" id="snippet-poster-pfp">
+                        <h2 id="snippet-author-username">Ygor331</h2>
+                    </div>
+                    <div id="language">
+                        <img src="../../img/python.png" alt="" id="snippet-language-logo">
+                        <h2 id="snippet-language-title">Python</h2>
+                    </div>
+                </div>
+                <div id="snippet-description">
+                    <h4 class="snippet-subtitle">Descrição</h4>
+                    <p class="snippet-summary-text">Este código tem como propósito utilizar a api do google tradutor
+                        utilizando do python</p>
+                </div>
+                <div id="snippet-version">
+                    <h4 class="snippet-subtitle">Versao</h4>
+                    <p class="snippet-summary-text">Este código tem como propósito utilizar a api do google tradutor
+                        utilizando do python</p>
+                </div>
+                <div id="summary-bottom">
+                    <div id="social-medias">
+                        <a href=""><img src="../../img/linkedin.png" alt="" class="social-media-icons"></a>
+                        <a href=""><img src="../../img/x.png" alt="" class="social-media-icons"></a>
+                        <a href=""><img src="../../img/github.png" alt="" class="social-media-icons"></a>
+                    </div>
+                    <div class="snippet-summary-like">
+                        <img src="../../img/like.png" alt="">
+                        <p>500</p>
+                    </div>
+                    <div class="snippet-summary-deslike">
+                        <img src="../../img/deslike.png" alt="">
+                        <p>20</p>
+                    </div>
+                </div>
+
+            </div>
+            <div id="snippet-code">
+                <div id="code">
+                    <p>from googletrans import Translator
+
+                        translator = Translator() # initalize the Translator object
+
+                        translations = translator.translate(['see if this helps', 'tarun'], dest='hi') # translate two
+                        phrases to Hindi
+
+                        for translation in translations: # print every translation
+
+                        print(translation.text)</p>
+                </div>
+                <div id="output">
+                    <h4 class="snippet-subtitle">Output esperado:</h4>
+                    <p>देखें कि इस मदद करता है</p>
+                </div>
+            </div>
+        </div>
+        <div id="snippet-comments-container">
+            <div id="snippet-comment-input">
+                <input type="text" placeholder="digite seu comentario...">
+            </div>
+            <div id="snippet-posted-comments">
+                <div class="snippet-comment">
+                    <img src="../../img/foto_latino_ware.png" alt="" class="snippet-comment-pfp">
+                    <h2 class="snippet-comment-username">Ygor331</h2>
+                    <p class="comment">Muito útil este snippet, adorei!!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

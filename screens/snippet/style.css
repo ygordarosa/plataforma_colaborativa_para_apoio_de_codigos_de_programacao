@@ -1,0 +1,330 @@
+/* ---------- RESET ---------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ---------- NAVBAR ---------- */
+.navbar {
+  display: flex;
+  align-items: center;
+  background-color: #0066cc;
+  color: white;
+  padding: 10px 40px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 125px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+/* Grupo central */
+.left-group {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin: 0 auto;
+}
+
+/* Logo */
+.logo img {
+  max-height: 100px;
+  width: auto;
+}
+
+/* Barra de busca */
+.search-container {
+  display: flex;
+  max-width: 600px;
+  height: 40px;
+  margin-left: 100px;
+}
+
+.search-container input {
+  flex: 1;
+  padding: 8px;
+  border: none;
+  border-radius: 10px 0 0 10px;
+  width: 500px;
+  background-color: rgb(221, 221, 221);
+}
+
+.search-container button {
+  background: #004c99;
+  border: none;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 0 10px 10px 0;
+  cursor: pointer;
+}
+
+.search-container button:hover {
+  background: #003366;
+}
+
+/* Botões da direita */
+.buttons-right {
+  margin-left: auto;
+  display: flex;
+  gap: 15px;
+}
+
+.buttons-right button {
+  background: #004c99;
+  border: none;
+  color: white;
+  padding: 8px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.buttons-right button:hover {
+  background: #003366;
+}
+
+/* ---------- CONTAINER PRINCIPAL ---------- */
+#main {
+  margin-top: 140px; /* respeita navbar fixa */
+  padding: 20px 5%;
+  display: flex;
+  flex-direction: column; /* blocos empilhados */
+  gap: 20px;
+}
+
+/* ---------- SUB HEADER ---------- */
+#sub-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+/* Botão voltar com seta */
+#sub-header button {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  font-size: 25px;
+  font-weight: bold;
+  cursor: pointer;
+  color: #333;
+}
+
+#sub-header button::before {
+  content: "←";
+  font-size: 2.5rem;
+}
+
+/* Barra cinza separadora */
+#gray-bar {
+  width: 2px;
+  height: 30px;
+  background: #ccc;
+  border-radius: 2px;
+  margin-left: 25px;
+  margin-right: 25px;
+}
+
+/* Título */
+#snippet-title {
+  font-size: 28px;
+  font-weight: bold;
+  color: #222;
+}
+
+/* ---------- SUMMARY + CODE LADO A LADO ---------- */
+#content-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 0; /* colados */
+}
+
+/* Summary 30% */
+#snippet-summary {
+  flex: 0 0 30%;
+  padding: 20px;
+  display: flex;
+  border-radius: 10px;
+  flex-direction: column;
+  gap: 15px;
+  background-color: #949494;
+  color: white;
+}
+
+/* Topo do summary (usuário x linguagem) */
+#summary-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+#summary-bottom {
+  margin-top: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#user{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+#language {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+#snippet-poster-pfp, #snippet-language-logo {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+}
+
+#snippet-author-username,
+#snippet-language-title {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+/* Descrição e versão */
+#snippet-description,
+#snippet-version {
+  width: 100%;
+}
+
+.snippet-subtitle {
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.snippet-summary-text {
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+}
+
+/* Redes sociais */
+#social-medias {
+  display: flex;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.social-media-icons {
+  width: 38px;
+  height: 38px;
+  cursor: pointer;
+}
+
+/* Likes e Deslikes */
+.snippet-summary-like,
+.snippet-summary-deslike {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.9rem;
+  margin-top: 8px;
+}
+
+.snippet-summary-like img,
+.snippet-summary-deslike img {
+  width: 30px;
+  height: 30px;
+}
+
+/* ---------- BLOCO DE CÓDIGO (70%) ---------- */
+#snippet-code {
+  flex: 0 0 70%;
+  padding: 15px;
+  
+  overflow-x: auto;
+}
+
+#code {
+  background: #D9D9D9;
+  color: #000000;
+  padding: 15px;
+  border-radius: 10px 10px 0 0;
+  font-family: monospace;
+  font-weight: bold;
+  font-size: 0.9rem;
+  white-space: pre-wrap;
+  
+}
+
+#output {
+  background: #1E1E1E;
+  color: white;
+  padding: 8px;
+  border-radius: 0 0 10px 10px;
+  font-family: monospace;
+  font-size: 0.85rem;
+  white-space: pre-wrap;
+}
+
+/* ---------- COMENTÁRIOS ---------- */
+#snippet-comments-container {
+  width: 60%;
+  margin: 25px auto 0 auto; /* centralizado */
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: ce;
+}
+
+#snippet-comment-input {
+  width: 100%;
+  display: flex;
+  justify-content: center; /* centraliza o input */
+}
+
+#snippet-comment-input input {
+  width: 70%;
+  padding: 10px;
+  border: none;
+  border-radius: 20px;
+  background: #e0e0e0;
+  outline: none;
+  font-size: 1rem;
+}
+
+.snippet-comment {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  background: #D9D9D9;
+  border-radius: 80px;
+  padding: 8px 12px;
+  font-size: 1.2rem;
+  text-align: center;
+  width: 100%;
+  align-items: center;
+}
+
+.snippet-comment-pfp {
+  width: 42px;
+  height: 46px;
+  border-radius: 50%;
+  background: #ccc;
+}
+
+.snippet-comment-username {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 3px;
+}
+
+.comment {
+  font-size: 1cqi;
+  color: #333;
+}
