@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snippets</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header class="navbar">
+        <div class="left-group">
+            <div class="logo">
+                <img src="../../img/Logo.png" alt="A fox with closed eyes as Logo">
+            </div>
+            <div class="search-container">
+                <input type="text" placeholder="Pesquisar...">
+                <button>🔍</button>
+            </div>
+            <div class="button-home">
+                <button>Snippets</button>
+            </div>
+        </div>
+
+        <div class="buttons-right">
+            <button>Login</button>
+            <button>Registrar</button>
+        </div>
+    </header>
+
+    <div id="main">
+        <div id="sub-header">
+            <button> Voltar </button>
+            <div id="gray-bar"></div>
+            <h1 id="snippet-title">Registrar</h1>
+        </div>
+
+        <div id="snippet-form">
+            <form action="#" method="POST">
+                <label for="language-select">Escolha a linguagem:</label>
+                <select id="language-select" name="language">
+                    <option value="python">Python</option>
+                    <option value="javascript">JavaScript</option>
+                    <option value="java">Java</option>
+                    <option value="csharp">C#</option>
+                    <option value="outra">Outra...</option>
+                </select>
+                <label for="description-input">Descrição:</label>
+                <input type="text" id="description-input" name="description" autocomplete="description" required>
+
+                <label for="version-input">Versão:</label>
+                <input type="text" id="version-input" name="version" autocomplete="version" required>
+
+                <label for="code-input">Código:</label>
+                <textarea name="code-input" id="code-input"></textarea>
+
+                <label for="Output-input">Output esperado:</label>
+                <textarea name="output-input" id="output-input"></textarea>
+
+                <button type="submit">Enviar Snippet</button>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>
