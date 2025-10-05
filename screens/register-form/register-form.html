@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snippets</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header class="navbar">
+        <div class="left-group">
+            <div class="logo">
+                <img src="../../img/Logo.png" alt="A fox with closed eyes as Logo">
+            </div>
+            <div class="search-container">
+                <input type="text" placeholder="Pesquisar...">
+                <button>🔍</button>
+            </div>
+            <div class="button-home">
+                <button>Snippets</button>
+            </div>
+        </div>
+
+        <div class="buttons-right">
+            <button>Login</button>
+            <button>Registrar</button>
+        </div>
+    </header>
+
+    <div id="main">
+        <div id="sub-header">
+            <button> Voltar </button>
+            <div id="gray-bar"></div>
+            <h1 id="snippet-title">Registrar</h1>
+        </div>
+
+        <div id="Register-form">
+            <form action="#" method="POST">
+                <label for="email-input">Email:</label>
+                <input type="email" id="email-input" name="email" autocomplete="email" required>
+
+                <label for="name-input">Nome:</label>
+                <input type="text" id="name-input" name="name" autocomplete="name" required>
+
+                <label for="password-input">Senha:</label>
+                <input type="password" id="password-input" name="password" autocomplete="current-password" required>
+
+                <button type="submit">Registrar</button>
+            </form>
+        </div>
+</body>
+
+</html>
