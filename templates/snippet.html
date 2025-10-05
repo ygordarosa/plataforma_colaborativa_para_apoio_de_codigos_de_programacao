@@ -13,7 +13,7 @@
         <!-- Grupo central: Logo + Pesquisa + Snippets -->
         <div class="left-group">
             <div class="logo">
-                <img src="../../img/Logo.png" alt="A fox with closed eyes as Logo">
+                <img src="{{ url_for('static', filename='img/Logo.png') }}" alt="A fox with closed eyes as Logo">
             </div>
 
             <div class="search-container">
@@ -43,11 +43,11 @@
             <div id="snippet-summary">
                 <div id="summary-top">
                     <div id="user">
-                        <img src="../../img/foto_latino_ware.png" alt="" id="snippet-poster-pfp">
+                        <img src="{{ url_for('static', filename='img/foto_latino_ware.png') }}" alt="" id="snippet-poster-pfp">
                         <h2 id="snippet-author-username">Ygor331</h2>
                     </div>
                     <div id="language">
-                        <img src="../../img/python.png" alt="" id="snippet-language-logo">
+                        <img src="{{ url_for('static', filename='img/python.png') }}" alt="" id="snippet-language-logo">
                         <h2 id="snippet-language-title">Python</h2>
                     </div>
                 </div>
@@ -63,16 +63,16 @@
                 </div>
                 <div id="summary-bottom">
                     <div id="social-medias">
-                        <a href=""><img src="../../img/linkedin.png" alt="" class="social-media-icons"></a>
-                        <a href=""><img src="../../img/x.png" alt="" class="social-media-icons"></a>
-                        <a href=""><img src="../../img/github.png" alt="" class="social-media-icons"></a>
+                        <a href=""><img src="{{ url_for('static', filename='img/linkedin.png') }}" alt="" class="social-media-icons"></a>
+                        <a href=""><img src="{{ url_for('static', filename='img/x.png') }}" alt="" class="social-media-icons"></a>
+                        <a href=""><img src="{{ url_for('static', filename='img/github.png') }}" alt="" class="social-media-icons"></a>
                     </div>
                     <div class="snippet-summary-like">
-                        <img src="../../img/like.png" alt="">
+                        <img src="{{ url_for('static', filename='img/like.png') }}" alt="">
                         <p>500</p>
                     </div>
                     <div class="snippet-summary-deslike">
-                        <img src="../../img/deslike.png" alt="">
+                        <img src="{{ url_for('static', filename='img/deslike.png') }}" alt="">
                         <p>20</p>
                     </div>
                 </div>
@@ -103,7 +103,7 @@
             </div>
             <div id="snippet-posted-comments">
                 <div class="snippet-comment">
-                    <img src="../../img/foto_latino_ware.png" alt="" class="snippet-comment-pfp">
+                    <img src="{{ url_for('static', filename='img/foto_latino_ware.png') }}" alt="" class="snippet-comment-pfp">
                     <h2 class="snippet-comment-username">Ygor331</h2>
                     <p class="comment">Muito útil este snippet, adorei!!</p>
                 </div>
