@@ -370,3 +370,9 @@
   background: #004c99;
   transform: scale(1.03);
 }
+
+
+a {
+  text-decoration: none;
+  color: white;
+}

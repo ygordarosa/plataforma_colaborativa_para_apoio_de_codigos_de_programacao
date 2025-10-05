@@ -284,6 +284,7 @@
 #sub-header button::before {
   content: "←";
   font-size: 2.5rem;
+  margin-left: 8rem;
 }
 #gray-bar {
   width: 2px;
@@ -292,4 +293,10 @@
   border-radius: 2px;
   margin-left: 25px;
   margin-right: 25px;
+}
+
+
+a {
+  text-decoration: none;
+  color: white;
 }

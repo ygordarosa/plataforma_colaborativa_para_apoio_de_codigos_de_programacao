@@ -10,32 +10,31 @@
 
 <body>
     <header class="navbar">
-        <!-- Grupo central: Logo + Pesquisa + Snippets -->
         <div class="left-group">
             <div class="logo">
-                <img src="{{ url_for('static', filename='img/Logo.png') }}" alt="A fox with closed eyes as Logo">
+                <a href="{{ url_for('home') }}"><img src="{{ url_for('static', filename='img/Logo.png') }}" alt="A fox with closed eyes as Logo"></a>
             </div>
-
-            <div class="search-container">
+            
+            <form class="search-container">
                 <input type="text" placeholder="Pesquisar...">
                 <button>🔍</button>
-            </div>
-
+            </form>
+            
             <div class="button-home">
-                <button>Snippets</button>
+                <a href="{{ url_for('listing') }}"><button>Snippets</button></a>
             </div>
         </div>
 
         <!-- Grupo da direita -->
         <div class="buttons-right">
-            <button>Login</button>
-            <button>Registrar</button>
+            <a href="{{ url_for('login') }}"><button>Login</button></a>
+            <a href="{{ url_for('register') }}"><button>Registrar</button></a>
         </div>
     </header>
 
     <div id="main">
         <div id="sub-header">
-            <button> Voltar </button>
+            <a href="{{ url_for('home') }}"><button> Voltar </button></a>
             <div id="gray-bar"></div>
             <h1 id="snippet-title">Como usar a API do Google tradutor</h1>
         </div>
