@@ -257,3 +257,93 @@
     margin-bottom: 40px;
 }
 
+
+/* ---------- SUB HEADER ---------- */
+#sub-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+/* Botão voltar com seta */
+#sub-header button {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  font-size: 25px;
+  font-weight: bold;
+  cursor: pointer;
+  color: #333;
+}
+
+#sub-header button::before {
+  content: "←";
+  font-size: 2.5rem;
+}
+#gray-bar {
+  width: 2px;
+  height: 30px;
+  background: #ccc;
+  border-radius: 2px;
+  margin-left: 25px;
+  margin-right: 25px;
+}
+
+/* ---------- FORM LOGIN ---------- */
+#login-form {
+  max-width: 400px;
+  margin: 60px auto;
+  padding: 30px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+#login-form form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+#login-form label {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #333;
+}
+
+#login-form input {
+  padding: 12px 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  background: #f9f9f9;
+  transition: border-color 0.3s, background 0.3s;
+}
+
+#login-form input:focus {
+  border-color: #0066cc;
+  background: #fff;
+  outline: none;
+}
+
+#login-form button {
+  padding: 12px;
+  background: #0066cc;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+}
+
+#login-form button:hover {
+  background: #004c99;
+  transform: scale(1.03);
+}
