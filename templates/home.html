@@ -1,34 +1,44 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Snippets</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
 </head>
+
 <body>
     <header class="navbar">
         <div class="left-group">
             <div class="logo">
-                <a href="{{ url_for('home') }}"><img src="{{ url_for('static', filename='img/Logo.png') }}" alt="A fox with closed eyes as Logo"></a>
+                <a href="{{ url_for('home') }}">
+                    <img src="{{ url_for('static', filename='img/Logo.png') }}" alt="Logo">
+                </a>
             </div>
-            
+
             <form class="search-container">
                 <input type="text" placeholder="Pesquisar...">
                 <button>🔍</button>
             </form>
-            
+
             <div class="button-home">
                 <a href="{{ url_for('listing') }}"><button>Snippets</button></a>
             </div>
         </div>
 
-        <!-- Grupo da direita -->
         <div class="buttons-right">
+            {% if user %}
+            <span style="margin-right:10px;">Olá, {{ user }}</span>
+            <a href="{{ url_for('create_snippet') }}"><button>Criar Snippet</button></a>
+            <a href="{{ url_for('logout') }}"><button>Logout</button></a>
+            {% else %}
             <a href="{{ url_for('login') }}"><button>Login</button></a>
             <a href="{{ url_for('register') }}"><button>Registrar</button></a>
+            {% endif %}
         </div>
     </header>
+
 
     <div id="main">
         <h1 class="language-title">🔥 Linguagens populares 🔥</h1>
@@ -49,9 +59,10 @@
                 <div class="snippet-resume">
                     <h3 class="snippet-resume-title">bla bla bla</h3>
                     <p class="snippet-resume-description">faz isso e aquilo e aquilo la</p>
-                    <img src="{{ url_for('static', filename='img/python.png') }}" alt="" class="snippet-resume-language-logo">
+                    <img src="{{ url_for('static', filename='img/python.png') }}" alt=""
+                        class="snippet-resume-language-logo">
                     <div class="snippet-resume-like">
-                        <img src="{{ url_for('static', filename='img/like.png') }}"  alt="">
+                        <img src="{{ url_for('static', filename='img/like.png') }}" alt="">
                         <p>500</p>
                     </div>
                     <div class="snippet-resume-deslike">
@@ -64,7 +75,8 @@
                 <div class="snippet-resume">
                     <h3 class="snippet-resume-title">bla bla bla</h3>
                     <p class="snippet-resume-description">faz isso e aquilo e aquilo la</p>
-                    <img src="{{ url_for('static', filename='img/javascript.png') }}" alt="" class="snippet-resume-language-logo">
+                    <img src="{{ url_for('static', filename='img/javascript.png') }}" alt=""
+                        class="snippet-resume-language-logo">
                     <div class="snippet-resume-like">
                         <img src="{{ url_for('static', filename='img/like.png') }}" alt="">
                         <p>500</p>
@@ -80,7 +92,8 @@
                 <div class="snippet-resume">
                     <h3 class="snippet-resume-title">bla bla bla</h3>
                     <p class="snippet-resume-description">faz isso e aquilo e aquilo la</p>
-                    <img src="{{ url_for('static', filename='img/java.png') }}" alt="" class="snippet-resume-language-logo">
+                    <img src="{{ url_for('static', filename='img/java.png') }}" alt=""
+                        class="snippet-resume-language-logo">
                     <div class="snippet-resume-like">
                         <img src="{{ url_for('static', filename='img/like.png') }}" alt="">
                         <p>500</p>
@@ -95,4 +108,5 @@
         </div>
     </div>
 </body>
+
 </html>

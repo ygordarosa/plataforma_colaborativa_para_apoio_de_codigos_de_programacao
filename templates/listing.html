@@ -10,23 +10,30 @@
     <header class="navbar">
         <div class="left-group">
             <div class="logo">
-                <a href="{{ url_for('home') }}"><img src="{{ url_for('static', filename='img/Logo.png') }}" alt="A fox with closed eyes as Logo"></a>
+                <a href="{{ url_for('home') }}">
+                    <img src="{{ url_for('static', filename='img/Logo.png') }}" alt="Logo">
+                </a>
             </div>
-            
+
             <form class="search-container">
                 <input type="text" placeholder="Pesquisar...">
                 <button>🔍</button>
             </form>
-            
+
             <div class="button-home">
                 <a href="{{ url_for('listing') }}"><button>Snippets</button></a>
             </div>
         </div>
 
-        <!-- Grupo da direita -->
         <div class="buttons-right">
+            {% if user %}
+            <span style="margin-right:10px;">Olá, {{ user }}</span>
+            <a href="{{ url_for('create_snippet') }}"><button>Criar Snippet</button></a>
+            <a href="{{ url_for('logout') }}"><button>Logout</button></a>
+            {% else %}
             <a href="{{ url_for('login') }}"><button>Login</button></a>
             <a href="{{ url_for('register') }}"><button>Registrar</button></a>
+            {% endif %}
         </div>
     </header>
 
