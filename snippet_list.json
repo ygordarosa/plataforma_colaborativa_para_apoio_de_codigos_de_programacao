@@ -1,0 +1,94 @@
+{
+  "snippets": [
+    {
+      "title": "Como usar a API do Google Tradutor",
+      "description": "Exemplo simples de uso da biblioteca googletrans para traduzir textos.",
+      "code": "from googletrans import Translator\n\ntranslator = Translator()\ntranslations = translator.translate(['see if this helps', 'tarun'], dest='hi')\nfor translation in translations:\n    print(translation.text)",
+      "output": "देखें कि यह मदद करता है\nतरुण"
+    },
+    {
+      "title": "Gerar números aleatórios",
+      "description": "Gera 5 números aleatórios entre 1 e 100 usando o módulo random.",
+      "code": "import random\n\nfor _ in range(5):\n    print(random.randint(1, 100))",
+      "output": "42\n7\n99\n13\n56"
+    },
+    {
+      "title": "Contar palavras em uma frase",
+      "description": "Conta quantas palavras existem em uma frase.",
+      "code": "frase = 'Python é uma linguagem poderosa e divertida'\ncontagem = len(frase.split())\nprint(contagem)",
+      "output": "7"
+    },
+    {
+      "title": "Criar um arquivo e escrever texto",
+      "description": "Cria um arquivo chamado exemplo.txt e escreve uma linha de texto.",
+      "code": "with open('exemplo.txt', 'w') as f:\n    f.write('Olá, este é um teste de escrita em arquivo!')",
+      "output": "Arquivo exemplo.txt criado com sucesso."
+    },
+    {
+      "title": "Ler um arquivo linha por linha",
+      "description": "Lê o conteúdo de um arquivo e imprime cada linha.",
+      "code": "with open('exemplo.txt', 'r') as f:\n    for linha in f:\n        print(linha.strip())",
+      "output": "Olá, este é um teste de escrita em arquivo!"
+    },
+    {
+      "title": "Verificar se um número é primo",
+      "description": "Determina se um número informado é primo ou não.",
+      "code": "num = 17\nis_prime = all(num % i != 0 for i in range(2, int(num ** 0.5) + 1))\nprint('É primo' if is_prime else 'Não é primo')",
+      "output": "É primo"
+    },
+    {
+      "title": "Calcular fatorial",
+      "description": "Calcula o fatorial de um número usando recursão.",
+      "code": "def fatorial(n):\n    return 1 if n <= 1 else n * fatorial(n - 1)\n\nprint(fatorial(5))",
+      "output": "120"
+    },
+    {
+      "title": "Usar list comprehension",
+      "description": "Cria uma lista com os quadrados dos números de 1 a 10.",
+      "code": "quadrados = [x**2 for x in range(1, 11)]\nprint(quadrados)",
+      "output": "[1, 4, 9, 16, 25, 36, 49, 64, 81, 100]"
+    },
+    {
+      "title": "Ordenar lista de dicionários",
+      "description": "Ordena uma lista de dicionários pelo valor da chave 'idade'.",
+      "code": "pessoas = [{'nome': 'Ana', 'idade': 25}, {'nome': 'João', 'idade': 30}, {'nome': 'Maria', 'idade': 20}]\nordenadas = sorted(pessoas, key=lambda x: x['idade'])\nprint(ordenadas)",
+      "output": "[{'nome': 'Maria', 'idade': 20}, {'nome': 'Ana', 'idade': 25}, {'nome': 'João', 'idade': 30}]"
+    },
+    {
+      "title": "Manipular datas com datetime",
+      "description": "Obtém a data atual e adiciona 7 dias.",
+      "code": "from datetime import datetime, timedelta\nhoje = datetime.now()\nproxima_semana = hoje + timedelta(days=7)\nprint(proxima_semana.strftime('%d/%m/%Y'))",
+      "output": "27/10/2025"
+    },
+    {
+      "title": "Usar map e lambda",
+      "description": "Aplica uma função lambda que dobra cada número de uma lista.",
+      "code": "numeros = [1, 2, 3, 4, 5]\nresultado = list(map(lambda x: x * 2, numeros))\nprint(resultado)",
+      "output": "[2, 4, 6, 8, 10]"
+    },
+    {
+      "title": "Converter JSON em dicionário",
+      "description": "Converte uma string JSON em um dicionário Python.",
+      "code": "import json\ntexto = '{\"nome\": \"Ygor\", \"idade\": 22}'\ndados = json.loads(texto)\nprint(dados['nome'])",
+      "output": "Ygor"
+    },
+    {
+      "title": "Consumir API pública",
+      "description": "Faz uma requisição HTTP para uma API pública e imprime o status.",
+      "code": "import requests\nresponse = requests.get('https://api.github.com')\nprint(response.status_code)",
+      "output": "200"
+    },
+    {
+      "title": "Criar gráfico simples com matplotlib",
+      "description": "Gera um gráfico de linha com dados simples.",
+      "code": "import matplotlib.pyplot as plt\nx = [1, 2, 3, 4, 5]\ny = [10, 20, 25, 30, 40]\nplt.plot(x, y)\nplt.title('Exemplo de gráfico')\nplt.show()",
+      "output": "Exibe uma janela com o gráfico de linha."
+    },
+    {
+      "title": "Enviar e-mail (exemplo simulado)",
+      "description": "Simula o envio de um e-mail (sem realmente enviar).",
+      "code": "def enviar_email(destinatario, assunto, mensagem):\n    print(f'Enviando e-mail para {destinatario} com assunto: {assunto}')\n\nenviar_email('teste@example.com', 'Olá', 'Mensagem de teste')",
+      "output": "Enviando e-mail para teste@example.com com assunto: Olá"
+    }
+  ]
+}
