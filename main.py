@@ -5,6 +5,7 @@ from flask_jwt_extended import (
 from datetime import timedelta
 from backend.listing import listing_post, listing_get
 from backend.register import register_user
+from backend.login import user_login
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "super-secret-key"
@@ -18,10 +19,6 @@ app.config["JWT_ACCESS_COOKIE_NAME"] = "access_token"
 app.config["JWT_COOKIE_CSRF_PROTECT"] = False
 
 jwt = JWTManager(app)
-
-USERS = {
-    "teste@teste.com": "123456",
-}
 
 
 @app.route('/')
@@ -62,11 +59,10 @@ def login():
         email = request.form.get("email")
         password = request.form.get("password")
 
-        if email in USERS and USERS[email] == password:
+        response = user_login(email, password)
+        if response:
             access_token = create_access_token(identity=email)
             response = make_response(redirect(url_for("home")))
-            
-            
             response.set_cookie("access_token", access_token, httponly=True)
             return response
         else:
