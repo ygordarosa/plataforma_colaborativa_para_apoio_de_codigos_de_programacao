@@ -154,6 +154,9 @@
 #python-button {
     background-color: #0000cc; /* azul escuro */
 }
+#all-button {
+    background-color: #000000; /* azul escuro */
+}
 #javascript-button {
     background-color: #ffea00; /* amarelo */
     color: #000;

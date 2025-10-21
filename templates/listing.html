@@ -15,147 +15,92 @@
                 </a>
             </div>
 
-            <form class="search-container">
-                <input type="text" placeholder="Pesquisar...">
-                <button>🔍</button>
+            <!-- FORMULÁRIO DE PESQUISA -->
+            <form class="search-container" method="POST" action="{{ url_for('listing') }}">
+                <input type="text" name="search" placeholder="Pesquisar..." value="{{ request.form.get('search', '') }}">
+                <button type="submit">🔍</button>
             </form>
 
             <div class="button-home">
-                <a href="{{ url_for('listing') }}"><button>Snippets</button></a>
+                <a href="{{ url_for('listing') }}"><button type="button">Snippets</button></a>
             </div>
         </div>
 
         <div class="buttons-right">
             {% if user %}
             <span style="margin-right:10px;">Olá, {{ user }}</span>
-            <a href="{{ url_for('create_snippet') }}"><button>Criar Snippet</button></a>
-            <a href="{{ url_for('logout') }}"><button>Logout</button></a>
+            <a href="{{ url_for('create_snippet') }}"><button type="button">Criar Snippet</button></a>
+            <a href="{{ url_for('logout') }}"><button type="button">Logout</button></a>
             {% else %}
-            <a href="{{ url_for('login') }}"><button>Login</button></a>
-            <a href="{{ url_for('register') }}"><button>Registrar</button></a>
+            <a href="{{ url_for('login') }}"><button type="button">Login</button></a>
+            <a href="{{ url_for('register') }}"><button type="button">Registrar</button></a>
             {% endif %}
         </div>
     </header>
 
     <div id="main">
         <div id="sub-header">
-            <a href="{{ url_for('home') }}"><button> Voltar </button></a>
+            <a href="{{ url_for('home') }}"><button type="button">Voltar</button></a>
             <div id="gray-bar"></div>
-            <h1 id="snippet-title">Pesquisa: Python</h1>
+            <h1 id="snippet-title">
+                {% if request.form.get('search') %}
+                    Pesquisa: {{ request.form.get('search') }}
+                {% else %}
+                    Todos os Snippets
+                {% endif %}
+            </h1>
         </div>
+
         <!-- FILTRO POR LINGUAGEM -->
         <div class="languages">
             <h2 class="language-filter-text">Filtros:</h2>
             <div class="language-buttons">
-                <button id="python-button">Python</button>
-                <button id="javascript-button">JavaScript</button>
-                <button id="java-button">Java</button>
-                <button id="csharp-button">C#</button>
-                <button id="all-button">Todos</button>
+                <form method="POST" action="{{ url_for('listing') }}">
+                    <input type="hidden" name="filter" value="python">
+                    <button type="submit" id="python-button">Python</button>
+                </form>
+                <form method="POST" action="{{ url_for('listing') }}">
+                    <input type="hidden" name="filter" value="javascript">
+                    <button type="submit" id="javascript-button">JavaScript</button>
+                </form>
+                <form method="POST" action="{{ url_for('listing') }}">
+                    <input type="hidden" name="filter" value="java">
+                    <button type="submit" id="java-button">Java</button>
+                </form>
+                <form method="POST" action="{{ url_for('listing') }}">
+                    <input type="hidden" name="filter" value="csharp">
+                    <button type="submit" id="csharp-button">C#</button>
+                </form>
+                <form method="POST" action="{{ url_for('listing') }}">
+                    <input type="hidden" name="filter" value="all">
+                    <button type="submit" id="all-button">Todos</button>
+                </form>
             </div>
         </div>
 
         <!-- LISTAGEM DE SNIPPETS -->
         <div class="listing-snippets">
-
-            <a href="{{ url_for('snippet') }}">
-                <div class="snippet-resume" data-language="python">
-                    <h3 class="snippet-resume-title">Exemplo Python</h3>
-                    <p class="snippet-resume-description">Faz isso e aquilo em Python.</p>
-                    <img src="{{ url_for('static', filename='img/python.png') }}" alt="" class="snippet-resume-language-logo">
-                    <div class="snippet-resume-like">
-                        <img src="{{ url_for('static', filename='img/like.png') }}" alt="">
-                        <p>500</p>
-                    </div>
-                    <div class="snippet-resume-deslike">
-                        <img src="{{ url_for('static', filename='img/deslike.png') }}" alt="">
-                        <p>20</p>
-                    </div>
-                </div>
-            </a>
-            <a href="{{ url_for('snippet') }}">
-                <div class="snippet-resume" data-language="javascript">
-                    <h3 class="snippet-resume-title">Exemplo JS</h3>
-                    <p class="snippet-resume-description">Faz isso e aquilo em JavaScript.</p>
-                    <img src="{{ url_for('static', filename='img/javascript.png') }}" alt="" class="snippet-resume-language-logo">
-                    <div class="snippet-resume-like">
-                        <img src="{{ url_for('static', filename='img/like.png') }}" alt="">
-                        <p>500</p>
-                    </div>
-                    <div class="snippet-resume-deslike">
-                        <img src="{{ url_for('static', filename='img/deslike.png') }}" alt="">
-                        <p>20</p>
-                    </div>
-                </div>
-            </a>
-
-            <a href="{{ url_for('snippet') }}">
-                <div class="snippet-resume" data-language="java">
-                    <h3 class="snippet-resume-title">Exemplo Java</h3>
-                    <p class="snippet-resume-description">Faz isso e aquilo em Java.</p>
-                    <img src="{{ url_for('static', filename='img/java.png') }}" alt="" class="snippet-resume-language-logo">
-                    <div class="snippet-resume-like">
-                        <img src="{{ url_for('static', filename='img/like.png') }}" alt="">
-                        <p>500</p>
-                    </div>
-                    <div class="snippet-resume-deslike">
-                        <img src="{{ url_for('static', filename='img/deslike.png') }}" alt="">
-                        <p>20</p>
-                    </div>
-                </div>
-            </a>
-
-            <a href="{{ url_for('snippet') }}">
-                <div class="snippet-resume" data-language="csharp">
-                    <h3 class="snippet-resume-title">Exemplo C#</h3>
-                    <p class="snippet-resume-description">Faz isso e aquilo em C#.</p>
-                    <img src="{{ url_for('static', filename='img/csharp.png') }}" alt="" class="snippet-resume-language-logo">
-                    <div class="snippet-resume-like">
-                        <img src="{{ url_for('static', filename='img/like.png') }}" alt="">
-                        <p>500</p>
-                    </div>
-                    <div class="snippet-resume-deslike">
-                        <img src="{{ url_for('static', filename='img/deslike.png') }}" alt="">
-                        <p>20</p>
-                    </div>
-                </div>
-            </a>
-
-            <a href="{{ url_for('snippet') }}">
-                <div class="snippet-resume" data-language="csharp">
-                    <h3 class="snippet-resume-title">Exemplo C#</h3>
-                    <p class="snippet-resume-description">Faz isso e aquilo em C#.</p>
-                    <img src="{{ url_for('static', filename='img/csharp.png') }}" alt="" class="snippet-resume-language-logo">
-                    <div class="snippet-resume-like">
-                        <img src="{{ url_for('static', filename='img/like.png') }}" alt="">
-                        <p>500</p>
-                    </div>
-                    <div class="snippet-resume-deslike">
-                        <img src="{{ url_for('static', filename='img/deslike.png') }}" alt="">
-                        <p>20</p>
-                    </div>
-                </div>
-                
-            </a>
-
-            <a href="{{ url_for('snippet') }}">
-                <div class="snippet-resume" data-language="csharp">
-                    <h3 class="snippet-resume-title">Exemplo C#</h3>
-                    <p class="snippet-resume-description">Faz isso e aquilo em C#.</p>
-                    <img src="{{ url_for('static', filename='img/csharp.png') }}" alt="" class="snippet-resume-language-logo">
-                    <div class="snippet-resume-like">
-                        <img src="{{ url_for('static', filename='img/like.png') }}" alt="">
-                        <p>500</p>
-                    </div>
-                    <div class="snippet-resume-deslike">
-                        <img src="{{ url_for('static', filename='img/deslike.png') }}" alt="">
-                        <p>20</p>
-                    </div>
-                </div>
-                
-            </a>
-
-            <!-- continue adicionando mais snippets aqui -->
+            {% if snippets %}
+                {% for snip in snippets %}
+                    <a href="{{ url_for('snippet', id=snip.id) }}">
+                        <div class="snippet-resume" data-language="{{ snip.language }}">
+                            <h3 class="snippet-resume-title">{{ snip.title }}</h3>
+                            <p class="snippet-resume-description">{{ snip.description }}</p>
+                            <img src="{{ url_for('static', filename='img/' ~ snip.language ~ '.png') }}" alt="{{ snip.language }}" class="snippet-resume-language-logo">
+                            <div class="snippet-resume-like">
+                                <img src="{{ url_for('static', filename='img/like.png') }}" alt="">
+                                <p>{{ snip.likes }}</p>
+                            </div>
+                            <div class="snippet-resume-deslike">
+                                <img src="{{ url_for('static', filename='img/deslike.png') }}" alt="">
+                                <p>{{ snip.dislikes }}</p>
+                            </div>
+                        </div>
+                    </a>
+                {% endfor %}
+            {% else %}
+                <p>Nenhum snippet encontrado.</p>
+            {% endif %}
         </div>
     </div>
 </body>

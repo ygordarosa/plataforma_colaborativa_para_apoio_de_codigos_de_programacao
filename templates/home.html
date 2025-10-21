@@ -17,9 +17,9 @@
                 </a>
             </div>
 
-            <form class="search-container">
-                <input type="text" placeholder="Pesquisar...">
-                <button>🔍</button>
+            <form class="search-container" method="POST" action="{{ url_for('listing') }}">
+                <input type="text" name="search" placeholder="Pesquisar..." value="{{ request.form.get('search', '') }}">
+                <button type="submit">🔍</button>
             </form>
 
             <div class="button-home">
@@ -45,10 +45,22 @@
         <div class="languages">
             <div class="language-buttons">
 
-                <a href="{{ url_for('listing') }}"><button id="python-button">Python</button></a>
-                <a href="{{ url_for('listing') }}"><button id="javascript-button">Javascript</button></a>
-                <a href="{{ url_for('listing') }}"><button id="java-button">Java</button></a>
-                <a href="{{ url_for('listing') }}"><button id="csharp-button">C#</button></a>
+                <form method="POST" action="{{ url_for('listing') }}">
+                    <input type="hidden" name="filter" value="python">
+                    <button type="submit" id="python-button">Python</button>
+                </form>
+                <form method="POST" action="{{ url_for('listing') }}">
+                    <input type="hidden" name="filter" value="javascript">
+                    <button type="submit" id="javascript-button">JavaScript</button>
+                </form>
+                <form method="POST" action="{{ url_for('listing') }}">
+                    <input type="hidden" name="filter" value="java">
+                    <button type="submit" id="java-button">Java</button>
+                </form>
+                <form method="POST" action="{{ url_for('listing') }}">
+                    <input type="hidden" name="filter" value="csharp">
+                    <button type="submit" id="csharp-button">C#</button>
+                </form>
             </div>
         </div>
 

@@ -3,6 +3,7 @@ from flask_jwt_extended import (
     JWTManager, create_access_token, jwt_required, get_jwt_identity
 )
 from datetime import timedelta
+from backend.listing import listing_post, listing_get
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "super-secret-key"
@@ -29,13 +30,29 @@ def home():
     return render_template("./home.html", user=user)
 
 
-@app.route('/listing')
+@app.route('/listing', methods=["GET", "POST"])
 @jwt_required(optional=True)
 def listing():
     user = get_jwt_identity()
     if not user:
         return redirect(url_for('login'))
-    return render_template("./listing.html", user=user)
+
+    # valores padrão
+    search = None
+    filter_language = None
+
+    if request.method == "POST":
+        search = request.form.get("search", "").strip()
+        filter_language = request.form.get("filter", "").strip()
+
+    # Lógica principal
+    if search or filter_language:
+        snippets = listing_post(search, filter_language)
+    else:
+        snippets = listing_get()
+
+    return render_template("listing.html", user=user, snippets=snippets)
+
 
 
 @app.route('/login', methods=["GET", "POST"])

@@ -16,9 +16,9 @@
                         alt="A fox with closed eyes as Logo"></a>
             </div>
 
-            <form class="search-container">
-                <input type="text" placeholder="Pesquisar...">
-                <button>🔍</button>
+            <form class="search-container" method="POST" action="{{ url_for('listing') }}">
+                <input type="text" name="search" placeholder="Pesquisar..." value="{{ request.form.get('search', '') }}">
+                <button type="submit">🔍</button>
             </form>
 
             <div class="button-home">
