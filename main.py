@@ -4,6 +4,7 @@ from flask_jwt_extended import (
 )
 from datetime import timedelta
 from backend.listing import listing_post, listing_get
+from backend.register import register_user
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "super-secret-key"
@@ -80,9 +81,27 @@ def logout():
     response.delete_cookie("access_token")
     return response
 
-
+@app.route('/register', methods=["GET", "POST"])
 @app.route('/register')
 def register():
+    if request.method == "POST":
+        email = request.form.get("email")
+        name = request.form.get("name")
+        password = request.form.get("password")
+
+        response = register_user(email, name, password)
+        if response:
+            access_token = create_access_token(identity=email)
+            response = make_response(redirect(url_for("home")))
+            
+            
+            response.set_cookie("access_token", access_token, httponly=True)
+            return response
+        else:
+            return render_template("./register-form.html", error="esse email já está cadastrado")
+
+
+
     return render_template("./register-form.html")
 
 
