@@ -6,6 +6,7 @@ from datetime import timedelta
 from backend.listing import listing_post, listing_get
 from backend.register import register_user
 from backend.login import user_login
+from backend.snippet import get_snippet
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "super-secret-key"
@@ -20,6 +21,22 @@ app.config["JWT_COOKIE_CSRF_PROTECT"] = False
 
 jwt = JWTManager(app)
 
+@jwt.unauthorized_loader
+def unauthorized_callback(callback):
+    # Quando o token não existe
+    return redirect(url_for('login'))
+
+@jwt.invalid_token_loader
+def invalid_token_callback(error):
+    # Quando o token é inválido (ex: corrompido)
+    return redirect(url_for('login'))
+
+@jwt.expired_token_loader
+def expired_token_callback(jwt_header, jwt_payload):
+    # Quando o token expirou
+    response = redirect(url_for('login'))
+    response.delete_cookie("access_token")  # remove o cookie antigo
+    return response
 
 @app.route('/')
 @jwt_required(optional=True)
@@ -107,7 +124,21 @@ def snippet():
     user = get_jwt_identity()
     if not user:
         return redirect(url_for('login'))
-    return render_template("./snippet.html", user=user)
+    
+
+    snippet_id = request.args.get("id", type=int)
+    if not snippet_id:
+        return "ID do snippet não informado", 400
+
+    snippet_data = get_snippet(snippet_id)
+    if not snippet_data:
+        return "Snippet não encontrado", 404
+
+    return render_template(
+        "snippet.html",
+        user=user,
+        snippet=snippet_data
+    )
 
 
 @app.route('/create_snippet')

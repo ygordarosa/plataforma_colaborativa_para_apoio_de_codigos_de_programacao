@@ -99,11 +99,11 @@
   background: #003366;
 }
 
-/* Espaço do conteúdo */
 #main {
-  margin-top: 140px; /* evita que o conteúdo fique atrás da navbar */
+  margin-top: calc(125px + 2rem);
   padding: 20px;
 }
+
 
 
 /* ------------------ TITULOS ------------------ */
@@ -183,17 +183,19 @@
 }
 
 .snippet-resume {
-    position: relative; /* necessário para o posicionamento absoluto da logo */
+    position: relative;
     background-color: #2d2d2d;
     color: #fff;
     padding: 20px;
+    padding-right: 80px; /* 🔹 espaço pra logo não sobrepor o texto */
     border-radius: 20px;
     width: 360px;
-    min-height: 160px;
+    min-height: 180px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
+
 
 .snippet-resume-title {
     font-size: 1.1rem;
@@ -209,13 +211,12 @@
 
 /* Logo da linguagem no canto superior direito */
 .snippet-resume-language-logo {
-    position: absolute; /* posicionamento absoluto em relação à div pai */
-    top: 15px;          /* distância do topo */
-    right: 15px;        /* distância da direita */
-    width: 48px;
-    height: 48px;
-    object-fit: contain;
+    top: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
 }
+
 
 /* Likes / Deslikes alinhados na parte inferior */
 .snippet-resume-like,
@@ -302,4 +303,48 @@
 a {
   text-decoration: none;
   color: white;
+}
+
+
+/* Cabeçalho do snippet: título + logo lado a lado */
+.snippet-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.snippet-resume-language-logo {
+  position: static; /* 🔹 remove o absoluto */
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+.snippet-resume-title {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #fff;
+  flex: 1; /* ocupa o resto do espaço */
+  word-break: break-word; /* 🔹 impede sobreposição em títulos longos */
+}
+
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 125px;
+  background-color: #0066cc;
+  color: white;
+  z-index: 1000; /* 🔹 garante que o header fica sempre por cima */
+}
+
+#main {
+  position: relative;
+  z-index: 1;
+  margin-top: 145px; /* 🔹 altura exata do header */
+  padding: 20px;
 }

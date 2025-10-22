@@ -1,12 +1,11 @@
-snip = [
-        {"id": 1, "title": "Loop em Python", "description": "Exemplo de loop for", "language": "python", "likes": 50, "dislikes": 2},
-        {"id": 2, "title": "Função em JS", "description": "Função arrow simples", "language": "javascript", "likes": 30, "dislikes": 1},
-        {"id": 3, "title": "Classe em Java", "description": "Exemplo básico de classe", "language": "java", "likes": 10, "dislikes": 0},
-    ]
+import json
+
+with open("./snippet_list.json", "r", encoding="utf-8") as f:
+        data = json.load(f)
 
 
 def listing_get():
-    return snip
+    return data["snippets"]
 
 def listing_post(search=None, filter_language=None):
     snippets = listing_get()

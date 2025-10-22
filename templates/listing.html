@@ -84,16 +84,18 @@
                 {% for snip in snippets %}
                     <a href="{{ url_for('snippet', id=snip.id) }}">
                         <div class="snippet-resume" data-language="{{ snip.language }}">
-                            <h3 class="snippet-resume-title">{{ snip.title }}</h3>
+                            <div class="snippet-header">
+                                <h3 class="snippet-resume-title">{{ snip.title }}</h3>
+                                <img src="{{ url_for('static', filename='img/' ~ snip.language ~ '.png') }}" alt="{{ snip.language }}" class="snippet-resume-language-logo">
+                            </div>
                             <p class="snippet-resume-description">{{ snip.description }}</p>
-                            <img src="{{ url_for('static', filename='img/' ~ snip.language ~ '.png') }}" alt="{{ snip.language }}" class="snippet-resume-language-logo">
                             <div class="snippet-resume-like">
                                 <img src="{{ url_for('static', filename='img/like.png') }}" alt="">
-                                <p>{{ snip.likes }}</p>
+                                <p>{{ snip.like }}</p>
                             </div>
                             <div class="snippet-resume-deslike">
                                 <img src="{{ url_for('static', filename='img/deslike.png') }}" alt="">
-                                <p>{{ snip.dislikes }}</p>
+                                <p>{{ snip.dislike }}</p>
                             </div>
                         </div>
                     </a>

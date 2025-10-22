@@ -43,63 +43,58 @@
         <div id="sub-header">
             <a href="{{ url_for('home') }}"><button> Voltar </button></a>
             <div id="gray-bar"></div>
-            <h1 id="snippet-title">Como usar a API do Google tradutor</h1>
+            <h1 id="snippet-title">{{ snippet.title }}</h1>
         </div>
         <div id="content-row">
             <div id="snippet-summary">
                 <div id="summary-top">
                     <div id="user">
                         <img src="{{ url_for('static', filename='img/foto_latino_ware.png') }}" alt="" id="snippet-poster-pfp">
-                        <h2 id="snippet-author-username">Ygor331</h2>
+                        <h2 id="snippet-author-username">{{ user }}</h2>
                     </div>
                     <div id="language">
-                        <img src="{{ url_for('static', filename='img/python.png') }}" alt="" id="snippet-language-logo">
-                        <h2 id="snippet-language-title">Python</h2>
+                        <img src="{{ url_for('static', filename='img/' + snippet.language + '.png') }}" alt="" id="snippet-language-logo">
+                        <h2 id="snippet-language-title">{{ snippet.language | capitalize }}</h2>
                     </div>
                 </div>
                 <div id="snippet-description">
                     <h4 class="snippet-subtitle">Descrição</h4>
-                    <p class="snippet-summary-text">Este código tem como propósito utilizar a api do google tradutor
-                        utilizando do python</p>
+                    <p class="snippet-summary-text">{{ snippet.description }}</p>
                 </div>
                 <div id="snippet-version">
-                    <h4 class="snippet-subtitle">Versao</h4>
-                    <p class="snippet-summary-text">Este código tem como propósito utilizar a api do google tradutor
-                        utilizando do python</p>
+                    <h4 class="snippet-subtitle">Versão</h4>
+                    <p class="snippet-summary-text">{{ snippet.version }}</p>
                 </div>
                 <div id="summary-bottom">
                     <div id="social-medias">
-                        <a href=""><img src="{{ url_for('static', filename='img/linkedin.png') }}" alt="" class="social-media-icons"></a>
-                        <a href=""><img src="{{ url_for('static', filename='img/x.png') }}" alt="" class="social-media-icons"></a>
-                        <a href=""><img src="{{ url_for('static', filename='img/github.png') }}" alt="" class="social-media-icons"></a>
+                        {% if snippet.linkedin %}
+                        <a href="{{ snippet.linkedin }}"><img src="{{ url_for('static', filename='img/linkedin.png') }}" alt="" class="social-media-icons"></a>
+                        {% endif %}
+                        {% if snippet.x %}
+                        <a href="{{ snippet.x }}"><img src="{{ url_for('static', filename='img/x.png') }}" alt="" class="social-media-icons"></a>
+                        {% endif %}
+                        {% if snippet.github %}
+                        <a href="{{ snippet.github }}"><img src="{{ url_for('static', filename='img/github.png') }}" alt="" class="social-media-icons"></a>
+                        {% endif %}
                     </div>
                     <div class="snippet-summary-like">
                         <img src="{{ url_for('static', filename='img/like.png') }}" alt="">
-                        <p>500</p>
+                        <p>{{ snippet.like }}</p>
                     </div>
                     <div class="snippet-summary-deslike">
                         <img src="{{ url_for('static', filename='img/deslike.png') }}" alt="">
-                        <p>20</p>
+                        <p>{{ snippet.dislike }}</p>
                     </div>
                 </div>
 
             </div>
             <div id="snippet-code">
                 <div id="code">
-                    <p>from googletrans import Translator
-
-                        translator = Translator() # initalize the Translator object
-
-                        translations = translator.translate(['see if this helps', 'tarun'], dest='hi') # translate two
-                        phrases to Hindi
-
-                        for translation in translations: # print every translation
-
-                        print(translation.text)</p>
+                    <pre><code>{{ snippet.code }}</code></pre>
                 </div>
                 <div id="output">
                     <h4 class="snippet-subtitle">Output esperado:</h4>
-                    <p>देखें कि इस मदद करता है</p>
+                    <pre>{{ snippet.output }}</pre>
                 </div>
             </div>
         </div>
