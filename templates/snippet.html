@@ -18,7 +18,8 @@
             </div>
 
             <form class="search-container" method="POST" action="{{ url_for('listing') }}">
-                <input type="text" name="search" placeholder="Pesquisar..." value="{{ request.form.get('search', '') }}">
+                <input type="text" name="search" placeholder="Pesquisar..."
+                    value="{{ request.form.get('search', '') }}">
                 <button type="submit">🔍</button>
             </form>
 
@@ -49,11 +50,13 @@
             <div id="snippet-summary">
                 <div id="summary-top">
                     <div id="user">
-                        <img src="{{ url_for('static', filename='img/foto_latino_ware.png') }}" alt="" id="snippet-poster-pfp">
+                        <img src="{{ url_for('static', filename='img/foto_latino_ware.png') }}" alt=""
+                            id="snippet-poster-pfp">
                         <h2 id="snippet-author-username">{{ user }}</h2>
                     </div>
                     <div id="language">
-                        <img src="{{ url_for('static', filename='img/' + snippet.language + '.png') }}" alt="" id="snippet-language-logo">
+                        <img src="{{ url_for('static', filename='img/' + snippet.language + '.png') }}" alt=""
+                            id="snippet-language-logo">
                         <h2 id="snippet-language-title">{{ snippet.language | capitalize }}</h2>
                     </div>
                 </div>
@@ -68,21 +71,34 @@
                 <div id="summary-bottom">
                     <div id="social-medias">
                         {% if snippet.linkedin %}
-                        <a href="{{ snippet.linkedin }}"><img src="{{ url_for('static', filename='img/linkedin.png') }}" alt="" class="social-media-icons"></a>
+                        <a href="{{ snippet.linkedin }}"><img src="{{ url_for('static', filename='img/linkedin.png') }}"
+                                alt="" class="social-media-icons"></a>
                         {% endif %}
                         {% if snippet.x %}
-                        <a href="{{ snippet.x }}"><img src="{{ url_for('static', filename='img/x.png') }}" alt="" class="social-media-icons"></a>
+                        <a href="{{ snippet.x }}"><img src="{{ url_for('static', filename='img/x.png') }}" alt=""
+                                class="social-media-icons"></a>
                         {% endif %}
                         {% if snippet.github %}
-                        <a href="{{ snippet.github }}"><img src="{{ url_for('static', filename='img/github.png') }}" alt="" class="social-media-icons"></a>
+                        <a href="{{ snippet.github }}"><img src="{{ url_for('static', filename='img/github.png') }}"
+                                alt="" class="social-media-icons"></a>
                         {% endif %}
                     </div>
                     <div class="snippet-summary-like">
-                        <img src="{{ url_for('static', filename='img/like.png') }}" alt="">
+                        <form method="POST" action="{{ url_for('snippet') }}">
+                            <input type="hidden" name="snippet_id" value="{{ snippet.id }}">
+                            <button type="submit", name="like" value="1">
+                                <img src="{{ url_for('static', filename='img/like.png') }}" alt="">
+                            </button>
+                        </form>
                         <p>{{ snippet.like }}</p>
                     </div>
                     <div class="snippet-summary-deslike">
-                        <img src="{{ url_for('static', filename='img/deslike.png') }}" alt="">
+                        <form method="POST" action="{{ url_for('snippet') }}">
+                            <input type="hidden" name="snippet_id" value="{{ snippet.id }}">
+                            <button type="submit" name="deslike", value="1">
+                                <img src="{{ url_for('static', filename='img/deslike.png') }}" alt="">
+                            </button>
+                        </form>
                         <p>{{ snippet.dislike }}</p>
                     </div>
                 </div>
@@ -100,17 +116,47 @@
         </div>
         <div id="snippet-comments-container">
             <div id="snippet-comment-input">
-                <input type="text" placeholder="digite seu comentario...">
+                <form method="POST" action="{{ url_for('snippet') }}" id="commentForm">
+                    <input type="hidden" name="snippet_id" value="{{ snippet.id }}">
+                    <input type="text" name="comment" id="commentInput" placeholder="Digite seu comentário..."
+                        autocomplete="off">
+                </form>
             </div>
+
             <div id="snippet-posted-comments">
-                <div class="snippet-comment">
-                    <img src="{{ url_for('static', filename='img/foto_latino_ware.png') }}" alt="" class="snippet-comment-pfp">
-                    <h2 class="snippet-comment-username">Ygor331</h2>
-                    <p class="comment">Muito útil este snippet, adorei!!</p>
-                </div>
+                
+
+                {% if comments %}
+                    {% for com in comments %}
+                        <div class="snippet-comment">
+                            <img src="{{ url_for('static', filename='img/foto_latino_ware.png') }}" alt=""
+                                class="snippet-comment-pfp">
+                            <h2 class="snippet-comment-username">{{com.user_name}}</h2>
+                            <p class="comment">{{com.comment}}</p>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p>Nenhum comentario.</p>
+                {% endif %}
             </div>
         </div>
     </div>
 </body>
+
+<script>
+    // Pega o input e o form
+    const commentInput = document.getElementById("commentInput");
+    const commentForm = document.getElementById("commentForm");
+
+    // Quando o usuário aperta Enter dentro do input
+    commentInput.addEventListener("keydown", function(event) {
+        if (event.key === "Enter") {
+            event.preventDefault(); // evita quebra de linha
+            if (commentInput.value.trim() !== "") {
+                commentForm.submit(); // envia o formulário
+            }
+        }
+    });
+</script>
 
 </html>

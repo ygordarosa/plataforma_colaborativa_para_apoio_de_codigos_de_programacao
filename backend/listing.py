@@ -3,11 +3,9 @@ import numpy as np
 from sentence_transformers import SentenceTransformer, util
 
 
-with open("./snippet_list.json", "r", encoding="utf-8") as f:
-        data = json.load(f)
-
-
 def listing_get():
+    with open("./snippet_list.json", "r", encoding="utf-8") as f:
+        data = json.load(f)
     return data["snippets"]
 
 def listing_post(search=None, filter_language=None):

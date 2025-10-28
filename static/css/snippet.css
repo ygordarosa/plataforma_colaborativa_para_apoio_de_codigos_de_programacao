@@ -349,3 +349,61 @@ a {
   text-decoration: none;
   color: white;
 }
+
+
+
+#snippet-comment-input input[type="text"] {
+  width: 70%;
+  padding: 10px;
+  border: none;
+  border-radius: 20px;
+  background: #e0e0e0;
+  outline: none;
+  font-size: 1rem;
+}
+
+
+
+
+.snippet-summary-like form,
+.snippet-summary-deslike form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.snippet-summary-like button,
+.snippet-summary-deslike button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.snippet-summary-like img,
+.snippet-summary-deslike img {
+  width: 32px;
+  height: 32px;
+  transition: transform 0.15s ease;
+}
+
+.snippet-summary-like img:hover,
+.snippet-summary-deslike img:hover {
+  transform: scale(1.15);
+}
+#snippet-comment-input form {
+  width: 90%;
+  max-width: 800px;
+}
+
+#snippet-comment-input input[type="text"] {
+  width: 90%;
+  max-width: 800px;
+}
+
+.snippet-comment {
+  margin-bottom: 12px;
+}

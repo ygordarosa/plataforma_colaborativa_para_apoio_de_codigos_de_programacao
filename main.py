@@ -6,7 +6,7 @@ from datetime import timedelta
 from backend.listing import listing_post, listing_get
 from backend.register import register_user
 from backend.login import user_login
-from backend.snippet import get_snippet, create_snippett, get_snippets_with_more_likes
+from backend.snippet import get_snippet, create_snippett, get_snippets_with_more_likes, post_comment, post_like_or_deslike
 from backend.user import get_user
 
 app = Flask(__name__)
@@ -43,10 +43,12 @@ def expired_token_callback(jwt_header, jwt_payload):
 @jwt_required(optional=True)
 def home():
     user = get_jwt_identity()
-    user_dict = get_user(user)
     snippets = get_snippets_with_more_likes()
-    return render_template("./home.html", user=user_dict["name"], snippets=snippets)
-
+    if user:
+        user_dict = get_user(user)
+        return render_template("./home.html", user=user_dict["name"], snippets=snippets)
+    else:
+        return render_template("./home.html", snippets=snippets)
 
 @app.route('/listing', methods=["GET", "POST"])
 @jwt_required(optional=True)
@@ -122,7 +124,7 @@ def register():
     return render_template("./register-form.html")
 
 
-@app.route('/snippet')
+@app.route('/snippet', methods=["GET", "POST"])
 @jwt_required(optional=True)
 def snippet():
     user = get_jwt_identity()
@@ -130,20 +132,35 @@ def snippet():
     if not user:
         return redirect(url_for('login'))
     
+    if request.method == "GET":
+        snippet_id = request.args.get("id", type=int)
+        if not snippet_id:
+            return "ID do snippet não informado", 400
 
-    snippet_id = request.args.get("id", type=int)
-    if not snippet_id:
-        return "ID do snippet não informado", 400
+        snippet_data, comments = get_snippet(snippet_id)
+        if not snippet_data:
+            return "Snippet não encontrado", 404
 
-    snippet_data = get_snippet(snippet_id)
-    if not snippet_data:
-        return "Snippet não encontrado", 404
-
-    return render_template(
-        "snippet.html",
-        user=user_dict["name"],
-        snippet=snippet_data
-    )
+        return render_template(
+            "snippet.html",
+            user=user_dict["name"],
+            snippet=snippet_data,
+            comments=comments
+        )
+    elif request.method == "POST":
+        comment = request.form.get("comment", "").strip()
+        like = request.form.get("like", "").strip()
+        deslike = request.form.get("deslike", "").strip()
+        snippet_id = request.form.get("snippet_id", type=int)
+        
+        if comment:
+            post_comment(snippet_id, user_dict, comment)
+        elif like:
+            post_like_or_deslike(0, snippet_id)     
+        elif deslike:
+            post_like_or_deslike(1, snippet_id) 
+        snippet_data, comments = get_snippet(snippet_id)
+        return redirect(url_for("snippet", id=snippet_id))
 
 
 @app.route('/create_snippet', methods=["GET", "POST"])

@@ -4,9 +4,12 @@ from sentence_transformers import SentenceTransformer, util
 def get_snippet(id):
     with open("./snippet_list.json", "r", encoding="utf-8") as f:
         data = json.load(f)
+    with open("./comments.json", "r", encoding="utf-8") as f:
+        dataComment = json.load(f)
     for s in data["snippets"]:
         if s["id"] == id:
-            return s
+            comments = [s for s in dataComment if s["snippet_id"] == id]
+            return s, comments
     return None
 
 
@@ -62,3 +65,41 @@ def get_snippets_with_more_likes():
     top_3 = sorted_snippets[:3]
     
     return top_3
+
+
+
+def post_comment(snippet_id, user, comment):
+    with open("./comments.json", "r", encoding="utf-8") as f:
+        data = json.load(f)
+    data.append(
+        {
+            "snippet_id": snippet_id,
+            "user_id": user["id"],
+            "user_name": user["name"],
+            "user_pfp": None,
+            "comment": comment
+        }
+    )
+    with open("./comments.json", "w", encoding="utf-8" ) as f:
+        json.dump(data, f, ensure_ascii=False, indent=2)
+    return True
+
+
+
+def post_like_or_deslike(type, snippet_id):
+    with open("./snippet_list.json", "r", encoding="utf-8") as f:
+        data = json.load(f)
+    snippets_list = data["snippets"]
+    for snippet in snippets_list:
+         if snippet["id"] == snippet_id:
+            if type == 0:
+                snippet["like"] += 1
+            else:
+                snippet["dislike"] += 1
+            break
+    response = {
+        "snippets" : snippets_list
+    }
+    with open("./snippet_list.json", "w", encoding="utf-8" ) as f:
+        json.dump(response, f, ensure_ascii=False, indent=2)
+    return True
