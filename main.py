@@ -6,7 +6,8 @@ from datetime import timedelta
 from backend.listing import listing_post, listing_get
 from backend.register import register_user
 from backend.login import user_login
-from backend.snippet import get_snippet
+from backend.snippet import get_snippet, create_snippett, get_snippets_with_more_likes
+from backend.user import get_user
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "super-secret-key"
@@ -42,13 +43,16 @@ def expired_token_callback(jwt_header, jwt_payload):
 @jwt_required(optional=True)
 def home():
     user = get_jwt_identity()
-    return render_template("./home.html", user=user)
+    user_dict = get_user(user)
+    snippets = get_snippets_with_more_likes()
+    return render_template("./home.html", user=user_dict["name"], snippets=snippets)
 
 
 @app.route('/listing', methods=["GET", "POST"])
 @jwt_required(optional=True)
 def listing():
     user = get_jwt_identity()
+    user_dict = get_user(user)
     if not user:
         return redirect(url_for('login'))
 
@@ -66,7 +70,7 @@ def listing():
     else:
         snippets = listing_get()
 
-    return render_template("listing.html", user=user, snippets=snippets)
+    return render_template("listing.html", user=user_dict["name"], snippets=snippets)
 
 
 
@@ -122,6 +126,7 @@ def register():
 @jwt_required(optional=True)
 def snippet():
     user = get_jwt_identity()
+    user_dict = get_user(user)
     if not user:
         return redirect(url_for('login'))
     
@@ -136,18 +141,39 @@ def snippet():
 
     return render_template(
         "snippet.html",
-        user=user,
+        user=user_dict["name"],
         snippet=snippet_data
     )
 
 
-@app.route('/create_snippet')
+@app.route('/create_snippet', methods=["GET", "POST"])
 @jwt_required(optional=True)
 def create_snippet():
     user = get_jwt_identity()
+    print(user)
     if not user:
         return redirect(url_for('login'))
-    return render_template("./snippet-form.html", user=user)
+    user_dict = get_user(user)
+    
+    if request.method == "POST":
+        
+        snippet = {
+            "title" : request.form.get("title"),
+            "language" : request.form.get("language"),
+            "description" : request.form.get("description"),
+            "version" : request.form.get("version"),
+            "code" : request.form.get("code-input"),
+            "output" : request.form.get("output-input")
+        }
+
+        response = create_snippett(snippet, user_dict)
+        if response:
+            response = make_response(redirect(url_for("home")))
+            return response
+        else:
+            return render_template("./snippet-form.html", error="algo deu errado")
+    
+    return render_template("./snippet-form.html", user=user_dict["name"])
 
 
 if __name__ == "__main__":

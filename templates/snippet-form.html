@@ -47,7 +47,9 @@
         </div>
 
         <div id="snippet-form">
-            <form action="#" method="POST">
+            <form action="{{ url_for('create_snippet') }}" method="POST">
+                <label for="title-input">Titulo</label>
+                <input type="text" id="title-input" name="title" autocomplete="title" required>
                 <label for="language-select">Escolha a linguagem:</label>
                 <select id="language-select" name="language">
                     <option value="python">Python</option>
@@ -67,7 +69,9 @@
 
                 <label for="Output-input">Output esperado:</label>
                 <textarea name="output-input" id="output-input"></textarea>
-
+                {% if error %}
+                <p style="color:red;">{{ error }}</p>
+                {% endif %}
                 <button type="submit">Enviar Snippet</button>
             </form>
         </div>

@@ -67,55 +67,27 @@
         <h1 class="popular-snippets-title">🔥 Snippets Mais Populares 🔥</h1>
         <div class="popular-snippets">
 
-            <a href="{{ url_for('snippet') }}">
-                <div class="snippet-resume">
-                    <h3 class="snippet-resume-title">bla bla bla</h3>
-                    <p class="snippet-resume-description">faz isso e aquilo e aquilo la</p>
-                    <img src="{{ url_for('static', filename='img/python.png') }}" alt=""
-                        class="snippet-resume-language-logo">
-                    <div class="snippet-resume-like">
-                        <img src="{{ url_for('static', filename='img/like.png') }}" alt="">
-                        <p>500</p>
-                    </div>
-                    <div class="snippet-resume-deslike">
-                        <img src="{{ url_for('static', filename='img/deslike.png') }}" alt="">
-                        <p>20</p>
-                    </div>
-                </div>
-            </a>
-            <a href="{{ url_for('snippet') }}">
-                <div class="snippet-resume">
-                    <h3 class="snippet-resume-title">bla bla bla</h3>
-                    <p class="snippet-resume-description">faz isso e aquilo e aquilo la</p>
-                    <img src="{{ url_for('static', filename='img/javascript.png') }}" alt=""
-                        class="snippet-resume-language-logo">
-                    <div class="snippet-resume-like">
-                        <img src="{{ url_for('static', filename='img/like.png') }}" alt="">
-                        <p>500</p>
-                    </div>
-                    <div class="snippet-resume-deslike">
-                        <img src="{{ url_for('static', filename='img/deslike.png') }}" alt="">
-                        <p>20</p>
-                    </div>
-                </div>
-            </a>
-
-            <a href="{{ url_for('snippet') }}">
-                <div class="snippet-resume">
-                    <h3 class="snippet-resume-title">bla bla bla</h3>
-                    <p class="snippet-resume-description">faz isso e aquilo e aquilo la</p>
-                    <img src="{{ url_for('static', filename='img/java.png') }}" alt=""
-                        class="snippet-resume-language-logo">
-                    <div class="snippet-resume-like">
-                        <img src="{{ url_for('static', filename='img/like.png') }}" alt="">
-                        <p>500</p>
-                    </div>
-                    <div class="snippet-resume-deslike">
-                        <img src="{{ url_for('static', filename='img/deslike.png') }}" alt="">
-                        <p>20</p>
-                    </div>
-                </div>
-            </a>
+            {% if snippets %}
+                {% for snip in snippets %}
+                    <a href="{{ url_for('snippet', id=snip.id) }}">
+                        <div class="snippet-resume" data-language="{{ snip.language }}">
+                            <div class="snippet-header">
+                                <h3 class="snippet-resume-title">{{ snip.title }}</h3>
+                                <img src="{{ url_for('static', filename='img/' ~ snip.language ~ '.png') }}" alt="{{ snip.language }}" class="snippet-resume-language-logo">
+                            </div>
+                            <p class="snippet-resume-description">{{ snip.description }}</p>
+                            <div class="snippet-resume-like">
+                                <img src="{{ url_for('static', filename='img/like.png') }}" alt="">
+                                <p>{{ snip.like }}</p>
+                            </div>
+                            <div class="snippet-resume-deslike">
+                                <img src="{{ url_for('static', filename='img/deslike.png') }}" alt="">
+                                <p>{{ snip.dislike }}</p>
+                            </div>
+                        </div>
+                    </a>
+                {% endfor %}
+            {% endif %}
 
         </div>
     </div>

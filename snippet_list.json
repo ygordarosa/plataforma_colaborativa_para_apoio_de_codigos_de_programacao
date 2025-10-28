@@ -239,6 +239,21 @@
       "description": "Simula o envio de um e-mail (sem realmente enviar).",
       "code": "def enviar_email(destinatario, assunto, mensagem):\n    print(f'Enviando e-mail para {destinatario} com assunto: {assunto}')\n\nenviar_email('teste@example.com', 'Olá', 'Mensagem de teste')",
       "output": "Enviando e-mail para teste@example.com com assunto: Olá"
+    },
+    {
+      "id": 17,
+      "user_id": 2,
+      "version": "python 3.13",
+      "language": "python",
+      "linkedin": null,
+      "x": null,
+      "github": null,
+      "like": 0,
+      "dislike": 0,
+      "title": "Abrir arquivo json",
+      "description": "um codigo simples de como abrir um json e usar seu conteudo",
+      "code": "with open(\"./embeddings.json\", \"r\", encoding=\"utf-8\") as f:\r\n  file = f.read()\r\n\r\n\r\nprint(file)",
+      "output": "vai dar print no que voce tiver no seu json"
     }
   ]
 }
