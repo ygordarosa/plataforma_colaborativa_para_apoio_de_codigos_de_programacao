@@ -16,11 +16,12 @@ for snippet in snippets:
   titles.append(snippet["title"])
 
 model = SentenceTransformer('paraphrase-multilingual-MiniLM-L12-v2')
-
+id = 0
 embeddings_list = []
 for snippet in embeddings:
+  id += 1
   emb = model.encode(snippet, convert_to_tensor=True)
-  embeddings_list.append(emb.tolist())
+  embeddings_list.append({"id": id, "embedding": emb.tolist()})
 
 
 with open("embeddings.json", "w", encoding="utf-8") as f:

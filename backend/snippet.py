@@ -1,4 +1,5 @@
 import json
+from sentence_transformers import SentenceTransformer, util
 
 def get_snippet(id):
     with open("./snippet_list.json", "r", encoding="utf-8") as f:
@@ -18,7 +19,10 @@ def create_snippett(snippet, user):
     for snippetf in snippets_list:
         if snippetf["id"] >= max_id:
             max_id = snippetf["id"] + 1
-    
+    model = SentenceTransformer('paraphrase-multilingual-MiniLM-L12-v2')
+    pre_embedding = f"{snippet["title"]}. {snippet["description"]}. {snippet["code"]}. {snippet["output"]}"
+    pre_embedding = pre_embedding.lower()
+    emb = model.encode(pre_embedding, convert_to_tensor=True)
     new_snippet = {
         "id": max_id,
         "user_id": user["id"],
@@ -32,7 +36,8 @@ def create_snippett(snippet, user):
         "title": snippet["title"],
         "description": snippet["description"],
         "code": snippet["code"],
-        "output": snippet["output"]
+        "output": snippet["output"],
+        "embedding": emb.tolist()
     }
     snippets_list.append(new_snippet)
     response = {
