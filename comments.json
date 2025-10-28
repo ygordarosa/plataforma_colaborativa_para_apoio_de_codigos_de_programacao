@@ -54,5 +54,12 @@
     "user_name": "Ygor da Rosa da Rosa",
     "user_pfp": null,
     "comment": "agora eu entendi !"
+  },
+  {
+    "snippet_id": 20,
+    "user_id": 2,
+    "user_name": "Ygor da Rosa da Rosa",
+    "user_pfp": null,
+    "comment": "comment"
   }
 ]
