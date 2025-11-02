@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criar Snippet</title>
+    <link rel="stylesheet" href="css/style_unificado.css">
+</head>
+
+<body>
+    <header class="navbar">
+        <div class="left-group">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="img/Logo.png" alt="Logo">
+                </a>
+            </div>
+
+            <form class="search-container" method="GET" action="listing.html">
+                <input type="text" name="search" placeholder="Pesquisar...">
+                <button type="submit">🔍</button>
+            </form>
+
+            <div class="button-home">
+                <a href="listing.html"><button>Snippets</button></a>
+            </div>
+        </div>
+
+        <div class="buttons-right" id="auth-buttons">
+            <!-- controlado via JS -->
+        </div>
+    </header>
+
+    <div id="main">
+        <div id="sub-header">
+            <button onclick="window.history.back()">Voltar</button>
+            <div id="gray-bar"></div>
+            <h1 id="snippet-title">Criar Snippet</h1>
+        </div>
+
+        <div id="snippet-form">
+            <form id="createSnippetForm">
+                <label for="title-input">Título:</label>
+                <input type="text" id="title-input" name="title" required>
+
+                <label for="language-select">Linguagem:</label>
+                <select id="language-select" name="language" required>
+                    <option value="python">Python</option>
+                    <option value="javascript">JavaScript</option>
+                    <option value="java">Java</option>
+                    <option value="csharp">C#</option>
+                    <option value="outra">Outra...</option>
+                </select>
+
+                <label for="description-input">Descrição:</label>
+                <input type="text" id="description-input" name="description" required>
+
+                <label for="version-input">Versão:</label>
+                <input type="text" id="version-input" name="version" required>
+
+                <label for="code-input">Código:</label>
+                <textarea id="code-input" name="code" rows="6" required></textarea>
+
+                <label for="output-input">Output esperado:</label>
+                <textarea id="output-input" name="output" rows="4" required></textarea>
+
+                <button type="submit">Enviar Snippet</button>
+
+                <p id="error-message" style="color:red; display:none;"></p>
+                <p id="success-message" style="color:green; display:none;"></p>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const apiUrl = "https://2iz8svjpw8.execute-api.us-east-1.amazonaws.com/create_snippet"; // substitua pelo endpoint da Lambda de criação
+
+        document.addEventListener("DOMContentLoaded", () => {
+            renderHeader();
+        });
+
+        document.getElementById("createSnippetForm").addEventListener("submit", async (event) => {
+            event.preventDefault();
+
+            const title = document.getElementById("title-input").value;
+            const language = document.getElementById("language-select").value;
+            const description = document.getElementById("description-input").value;
+            const version = document.getElementById("version-input").value;
+            const code = document.getElementById("code-input").value;
+            const output = document.getElementById("output-input").value;
+            const errorMsg = document.getElementById("error-message");
+            const successMsg = document.getElementById("success-message");
+
+            errorMsg.style.display = "none";
+            successMsg.style.display = "none";
+
+            const user = JSON.parse(localStorage.getItem("user"));
+            if (!user) {
+                errorMsg.style.display = "block";
+                errorMsg.textContent = "Você precisa estar logado para criar um snippet.";
+                return;
+            }
+
+            const email = user.email;
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        title,
+                        language,
+                        description,
+                        version,
+                        code,
+                        output,
+                        email
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.status === 200) {
+                    successMsg.style.display = "block";
+                    successMsg.textContent = "Snippet criado com sucesso!";
+                    document.getElementById("createSnippetForm").reset();
+
+                    setTimeout(() => {
+                        window.location.href = "listing.html";
+                    }, 1500);
+                } else {
+                    errorMsg.style.display = "block";
+                    errorMsg.textContent = data.message || "Erro ao criar snippet.";
+                }
+            } catch (err) {
+                errorMsg.style.display = "block";
+                errorMsg.textContent = "Erro ao conectar ao servidor.";
+            }
+        });
+
+        function renderHeader() {
+            const user = JSON.parse(localStorage.getItem("user"));
+            const headerButtons = document.getElementById("auth-buttons");
+            headerButtons.innerHTML = "";
+
+            if (user) {
+                headerButtons.innerHTML = `
+                    <span style="margin-right:10px;">Olá, ${user.name}</span>
+                    <a href="snippet-form.html"><button>Criar Snippet</button></a>
+                    <button onclick="logout()">Logout</button>
+                `;
+            } else {
+                headerButtons.innerHTML = `
+                    <a href="login-form.html"><button>Login</button></a>
+                    <a href="register-form.html"><button>Registrar</button></a>
+                `;
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem("user");
+            renderHeader();
+            window.location.href = "index.html";
+        }
+    </script>
+</body>
+
+</html>
