@@ -17,7 +17,7 @@
                 </a>
             </div>
 
-            <form class="search-container" method="GET" action="listing.html">
+            <form class="search-container" method="POST" action="listing.html">
                 <input type="text" name="search" placeholder="Pesquisar...">
                 <button type="submit">🔍</button>
             </form>
@@ -101,13 +101,13 @@
             if (user) {
                 headerButtons.innerHTML = `
                     <span style="margin-right:10px;">Olá, ${user.name}</span>
-                    <a href="create_snippet.html"><button>Criar Snippet</button></a>
+                    <a href="snippet-form.html"><button>Criar Snippet</button></a>
                     <button onclick="logout()">Logout</button>
                 `;
             } else {
                 headerButtons.innerHTML = `
-                    <a href="login.html"><button>Login</button></a>
-                    <a href="register.html"><button>Registrar</button></a>
+                    <a href="login-form.html"><button>Login</button></a>
+                    <a href="register-form.html"><button>Registrar</button></a>
                 `;
             }
         }
