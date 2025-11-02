@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snippets - Registrar</title>
+    <link rel="stylesheet" href="css/style_unificado.css">
+</head>
+
+<body>
+    <header class="navbar">
+        <div class="left-group">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="img/Logo.png" alt="Logo">
+                </a>
+            </div>
+
+            <form class="search-container" method="GET" action="listing.html">
+                <input type="text" name="search" placeholder="Pesquisar...">
+                <button type="submit">🔍</button>
+            </form>
+
+            <div class="button-home">
+                <a href="listing.html"><button>Snippets</button></a>
+            </div>
+        </div>
+
+        <div class="buttons-right" id="auth-buttons">
+            <!-- controlado via JS -->
+        </div>
+    </header>
+
+    <div id="main">
+        <div id="sub-header">
+            <button onclick="window.history.back()">Voltar</button>
+            <div id="gray-bar"></div>
+            <h1 id="snippet-title">Registrar</h1>
+        </div>
+
+        <div id="Register-form">
+            <form id="registerForm">
+                <label for="email-input">Email:</label>
+                <input type="email" id="email-input" name="email" autocomplete="email" required>
+
+                <label for="name-input">Nome:</label>
+                <input type="text" id="name-input" name="name" autocomplete="name" required>
+
+                <label for="password-input">Senha:</label>
+                <input type="password" id="password-input" name="password" autocomplete="current-password" required>
+
+                <button type="submit">Registrar</button>
+                <p id="error-message" style="color:red; display:none;"></p>
+                <p id="success-message" style="color:green; display:none;"></p>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const apiUrl = "https://2iz8svjpw8.execute-api.us-east-1.amazonaws.com/register"; // substitua pelo endpoint da sua Lambda de registro
+
+        document.addEventListener("DOMContentLoaded", () => {
+            renderHeader();
+        });
+
+        document.getElementById("registerForm").addEventListener("submit", async (event) => {
+            event.preventDefault();
+
+            const email = document.getElementById("email-input").value;
+            const name = document.getElementById("name-input").value;
+            const password = document.getElementById("password-input").value;
+            const errorMsg = document.getElementById("error-message");
+            const successMsg = document.getElementById("success-message");
+
+            errorMsg.style.display = "none";
+            successMsg.style.display = "none";
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ email, name, password })
+                });
+
+                const data = await response.json();
+
+                if (response.status === 200) {
+                    successMsg.style.display = "block";
+                    successMsg.textContent = "Conta criada com sucesso! Redirecionando...";
+                    localStorage.setItem("user", JSON.stringify(data));
+
+                    setTimeout(() => {
+                        window.location.href = "home.html";
+                    }, 1500);
+                } else {
+                    errorMsg.style.display = "block";
+                    errorMsg.textContent = data.message || "Erro ao registrar.";
+                }
+            } catch (err) {
+                errorMsg.style.display = "block";
+                errorMsg.textContent = "Erro ao conectar ao servidor.";
+            }
+        });
+
+        function renderHeader() {
+            const user = JSON.parse(localStorage.getItem("user"));
+            const headerButtons = document.getElementById("auth-buttons");
+            headerButtons.innerHTML = "";
+
+            if (user) {
+                headerButtons.innerHTML = `
+                    <span style="margin-right:10px;">Olá, ${user.name}</span>
+                    <a href="snippet-form.html"><button>Criar Snippet</button></a>
+                    <button onclick="logout()">Logout</button>
+                `;
+            } else {
+                headerButtons.innerHTML = `
+                    <a href="login-form.html"><button>Login</button></a>
+                    <a href="register-form.html"><button>Registrar</button></a>
+                `;
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem("user");
+            renderHeader();
+            window.location.href = "index.html";
+        }
+    </script>
+</body>
+
+</html>
