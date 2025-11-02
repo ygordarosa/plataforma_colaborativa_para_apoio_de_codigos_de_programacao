@@ -12,13 +12,13 @@
     <header class="navbar">
         <div class="left-group">
             <div class="logo">
-                <a href="index.html">
+                <a href="home.html">
                     <img src="img/Logo.png" alt="Logo">
                 </a>
             </div>
 
-            <form class="search-container" method="GET" action="listing.html">
-                <input type="text" name="search" placeholder="Pesquisar...">
+            <form class="search-container" id="searchForm">
+                <input type="text" id="search-input" placeholder="Pesquisar...">
                 <button type="submit">🔍</button>
             </form>
 
@@ -114,6 +114,15 @@
             const search = document.getElementById("search-input").value;
             window.location.href = `listing.html?search=${encodeURIComponent(search)}`;
         }
+        // pesquisa
+        document.getElementById("searchForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            const query = document.getElementById("search-input").value.trim();
+            if(query) {
+                // Redireciona para a página listing com o parâmetro search
+                window.location.href = `listing.html?search=${encodeURIComponent(query)}`;
+            }
+        });
     </script>
 </body>
 
