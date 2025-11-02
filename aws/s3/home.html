@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snippets</title>
+    <link rel="stylesheet" href="css/style_unificado.css">
+</head>
+
+<body>
+    <header class="navbar">
+        <div class="left-group">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="img/Logo.png" alt="Logo">
+                </a>
+            </div>
+
+            <form class="search-container" method="GET" action="listing.html">
+                <input type="text" name="search" placeholder="Pesquisar...">
+                <button type="submit">🔍</button>
+            </form>
+
+            <div class="button-home">
+                <a href="listing.html"><button>Snippets</button></a>
+            </div>
+        </div>
+
+        <div class="buttons-right" id="auth-buttons">
+            <!-- Login / Logout / Criar Snippet controlados via JS futuramente -->
+        </div>
+    </header>
+
+    <div id="main">
+        <h1 class="language-title">🔥 Linguagens populares 🔥</h1>
+        <div class="languages">
+            <div class="language-buttons">
+                <button onclick="filterLanguage('python')" id="python-button">Python</button>
+                <button onclick="filterLanguage('javascript')" id="javascript-button">JavaScript</button>
+                <button onclick="filterLanguage('java')" id="java-button">Java</button>
+                <button onclick="filterLanguage('csharp')" id="csharp-button">C#</button>
+            </div>
+        </div>
+
+        <h1 class="popular-snippets-title">🔥 Snippets Mais Populares 🔥</h1>
+        <div id="popular-snippets" class="popular-snippets"></div>
+    </div>
+
+    <script>
+        const API_URL = "https://2iz8svjpw8.execute-api.us-east-1.amazonaws.com/";
+
+        document.addEventListener("DOMContentLoaded", () => {
+            loadSnippets();
+            renderHeader();
+        });
+
+        // --- Carrega snippets mais populares ---
+        async function loadSnippets() {
+            try {
+                const response = await fetch(API_URL);
+                const snippets = await response.json();
+
+                const container = document.getElementById("popular-snippets");
+                container.innerHTML = ""; // Limpa antes de renderizar
+
+                snippets.forEach(snip => {
+                    const snippetDiv = document.createElement("a");
+                    snippetDiv.href = `snippet.html?id=${snip.id}`;
+                    snippetDiv.innerHTML = `
+                        <div class="snippet-resume" data-language="${snip.language}">
+                            <div class="snippet-header">
+                                <h3 class="snippet-resume-title">${snip.title}</h3>
+                                <img src="img/${snip.language}.png" alt="${snip.language}" class="snippet-resume-language-logo">
+                            </div>
+                            <p class="snippet-resume-description">${snip.description}</p>
+                            <div class="snippet-resume-like">
+                                <img src="img/like.png" alt="like">
+                                <p>${snip.like}</p>
+                            </div>
+                            <div class="snippet-resume-deslike">
+                                <img src="img/deslike.png" alt="deslike">
+                                <p>${snip.deslike}</p>
+                            </div>
+                        </div>
+                    `;
+                    container.appendChild(snippetDiv);
+                });
+
+            } catch (err) {
+                console.error("Erro ao carregar snippets:", err);
+            }
+        }
+
+        // --- Renderiza o header conforme login ---
+        function renderHeader() {
+            const user = JSON.parse(localStorage.getItem("user"));
+            const headerButtons = document.getElementById("auth-buttons");
+            headerButtons.innerHTML = "";
+
+            if (user) {
+                headerButtons.innerHTML = `
+                    <span style="margin-right:10px;">Olá, ${user.name}</span>
+                    <a href="create_snippet.html"><button>Criar Snippet</button></a>
+                    <button onclick="logout()">Logout</button>
+                `;
+            } else {
+                headerButtons.innerHTML = `
+                    <a href="login.html"><button>Login</button></a>
+                    <a href="register.html"><button>Registrar</button></a>
+                `;
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem("user");
+            renderHeader();
+        }
+
+        // --- Filtro e pesquisa (simples) ---
+        function filterByLanguage(lang) {
+            window.location.href = `listing.html?filter=${lang}`;
+        }
+
+        function handleSearch(event) {
+            event.preventDefault();
+            const search = document.getElementById("search-input").value;
+            window.location.href = `listing.html?search=${encodeURIComponent(search)}`;
+        }
+    </script>
+</body>
+
+</html>
