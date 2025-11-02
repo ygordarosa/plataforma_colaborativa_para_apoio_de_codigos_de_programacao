@@ -76,7 +76,7 @@
                             <p class="snippet-resume-description">${snip.description}</p>
                             <div class="snippet-resume-like">
                                 <img src="img/like.png" alt="like">
-                                <p>${snip.like}</p>
+                                <p>${snip.likes}</p>
                             </div>
                             <div class="snippet-resume-deslike">
                                 <img src="img/deslike.png" alt="deslike">
@@ -121,7 +121,7 @@
         function filterByLanguage(lang) {
             window.location.href = `listing.html?filter=${lang}`;
         }
-
+        // pesquisa
         document.getElementById("searchForm").addEventListener("submit", function(event) {
             event.preventDefault();
             const query = document.getElementById("search-input").value.trim();

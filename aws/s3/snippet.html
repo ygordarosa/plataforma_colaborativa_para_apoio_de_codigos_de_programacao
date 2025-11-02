@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snippet</title>
+    <link rel="stylesheet" href="css/style_unificado.css">
+</head>
+
+<body>
+    <header class="navbar">
+        <div class="left-group">
+            <div class="logo">
+                <a href="home.html">
+                    <img src="img/Logo.png" alt="Logo">
+                </a>
+            </div>
+
+            <form class="search-container" id="searchForm">
+                <input type="text" id="search-input" placeholder="Pesquisar...">
+                <button type="submit">🔍</button>
+            </form>
+
+            <div class="button-home">
+                <a href="listing.html"><button>Snippets</button></a>
+            </div>
+        </div>
+
+        <div class="buttons-right" id="auth-buttons"></div>
+    </header>
+
+    <div id="main">
+        <div id="sub-header">
+            <a href="listing.html"><button>Voltar</button></a>
+            <div id="gray-bar"></div>
+            <h1 id="snippet-title">Carregando...</h1>
+        </div>
+
+        <div id="content-row">
+            <div id="snippet-summary">
+                <div id="summary-top">
+                    <div id="user">
+                        <img src="img/foto_latino_ware.png" alt="" id="snippet-poster-pfp">
+                        <h2 id="snippet-author-username"></h2>
+                    </div>
+                    <div id="language">
+                        <img id="snippet-language-logo" alt="">
+                        <h2 id="snippet-language-title"></h2>
+                    </div>
+                </div>
+                <div id="snippet-description">
+                    <h4 class="snippet-subtitle">Descrição</h4>
+                    <p id="snippet-description-text"></p>
+                </div>
+                <div id="snippet-version">
+                    <h4 class="snippet-subtitle">Versão</h4>
+                    <p id="snippet-version-text"></p>
+                </div>
+                <div id="summary-bottom">
+                    <div id="social-medias"></div>
+                    <div class="snippet-summary-like">
+                        <button id="like-button"><img src="img/like.png" alt=""></button>
+                        <p id="like-count">0</p>
+                    </div>
+                    <div class="snippet-summary-deslike">
+                        <button id="deslike-button"><img src="img/deslike.png" alt=""></button>
+                        <p id="deslike-count">0</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="snippet-code">
+                <div id="code">
+                    <pre><code id="snippet-code-block"></code></pre>
+                </div>
+                <div id="output">
+                    <h4 class="snippet-subtitle">Output esperado:</h4>
+                    <pre id="snippet-output-block"></pre>
+                </div>
+            </div>
+        </div>
+
+        <div id="snippet-comments-container">
+            <div id="snippet-comment-input">
+                <input type="text" id="commentInput" placeholder="Digite seu comentário..." autocomplete="off">
+            </div>
+
+            <div id="snippet-posted-comments">
+                <p>Carregando comentários...</p>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+const LAMBDA_URL = "https://2iz8svjpw8.execute-api.us-east-1.amazonaws.com/snippet";
+
+// ================= HEADER =================
+function renderHeader() {
+    const user = JSON.parse(localStorage.getItem("user"));
+    const headerButtons = document.getElementById("auth-buttons");
+    headerButtons.innerHTML = "";
+
+    if (user) {
+        headerButtons.innerHTML = `
+            <span style="margin-right:10px;">Olá, ${user.name}</span>
+            <a href="snippet-form.html"><button>Criar Snippet</button></a>
+            <button onclick="logout()">Logout</button>
+        `;
+    } else {
+        headerButtons.innerHTML = `
+            <a href="login-form.html"><button>Login</button></a>
+            <a href="register-form.html"><button>Registrar</button></a>
+        `;
+    }
+}
+
+function logout() {
+    localStorage.removeItem("user");
+    window.location.href = "home.html"
+}
+
+// ================= FUNÇÕES PRINCIPAIS =================
+async function fetchSnippet() {
+    const params = new URLSearchParams(window.location.search);
+    const snippetId = params.get("id");
+    if (!snippetId) {
+        document.getElementById("snippet-title").textContent = "Snippet não encontrado";
+        return;
+    }
+
+    const response = await fetch(`${LAMBDA_URL}?id=${snippetId}`);
+    const data = await response.json();
+
+    const snippet = data.snippet;
+    const comments = data.comments;
+
+    // Preenche o snippet
+    document.getElementById("snippet-title").textContent = snippet.title;
+    document.getElementById("snippet-author-username").textContent = snippet.email;
+    document.getElementById("snippet-language-logo").src = `img/${snippet.language}.png`;
+    document.getElementById("snippet-language-title").textContent = snippet.language;
+    document.getElementById("snippet-description-text").textContent = snippet.description;
+    document.getElementById("snippet-version-text").textContent = snippet.version;
+    document.getElementById("snippet-code-block").innerText = snippet.code.replace(/\\n/g, "\n");
+    document.getElementById("snippet-output-block").innerText = snippet.output.replace(/\\n/g, "\n");
+    document.getElementById("like-count").textContent = snippet.likes;
+    document.getElementById("deslike-count").textContent = snippet.deslike;
+
+    const socials = document.getElementById("social-medias");
+    socials.innerHTML = "";
+    if (snippet.linkedin) socials.innerHTML += `<a href="${snippet.linkedin}"><img src="img/linkedin.png" alt="" class="social-media-icons"></a>`;
+    if (snippet.x) socials.innerHTML += `<a href="${snippet.x}"><img src="img/x.png" alt="" class="social-media-icons"></a>`;
+    if (snippet.github) socials.innerHTML += `<a href="${snippet.github}"><img src="img/github.png" alt="" class="social-media-icons"></a>`;
+
+    // Renderiza comentários
+    const commentsContainer = document.getElementById("snippet-posted-comments");
+    commentsContainer.innerHTML = "";
+    if (comments.length === 0) {
+        commentsContainer.innerHTML = "<p>Nenhum comentário.</p>";
+    } else {
+        comments.forEach(c => {
+            const html = `
+                <div class="snippet-comment">
+                    <img src="img/foto_latino_ware.png" alt="" class="snippet-comment-pfp">
+                    <h2 class="snippet-comment-username">${c.user_name}</h2>
+                    <p class="comment">${c.comment}</p>
+                </div>
+            `;
+            commentsContainer.insertAdjacentHTML("beforeend", html);
+        });
+    }
+
+    // Botões de like/deslike
+    document.getElementById("like-button").onclick = () => sendAction("like", snippetId);
+    document.getElementById("deslike-button").onclick = () => sendAction("deslike", snippetId);
+
+    // Comentário
+    const commentInput = document.getElementById("commentInput");
+    commentInput.addEventListener("keydown", async (event) => {
+        if (event.key === "Enter") {
+            event.preventDefault();
+            const user = JSON.parse(localStorage.getItem("user"));
+            if (!user) {
+                alert("Você precisa estar logado para comentar!");
+                return;
+            }
+            const comment = commentInput.value.trim();
+            if (comment) {
+                await fetch(LAMBDA_URL, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        snippet_id: snippetId,
+                        user_email: user.email,
+                        user_name: user.name,
+                        comment: comment
+                    })
+                });
+                commentInput.value = "";
+                fetchSnippet(); // recarrega comentários
+            }
+        }
+    });
+}
+
+async function sendAction(action, snippetId) {
+    await fetch(LAMBDA_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: action, snippet_id: snippetId })
+    });
+    fetchSnippet(); // atualiza contadores
+}
+
+// ================= BUSCA (REUTILIZÁVEL) =================
+document.getElementById("searchForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    const search = document.getElementById("search-input").value.trim();
+    if (search) {
+        window.location.href = `listing.html?search=${encodeURIComponent(search)}`;
+    }
+});
+
+// ================= INICIALIZAÇÃO =================
+renderHeader();
+fetchSnippet();
+</script>
+
+</html>

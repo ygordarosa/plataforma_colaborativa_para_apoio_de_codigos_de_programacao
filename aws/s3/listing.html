@@ -82,7 +82,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                         <p class="snippet-resume-description">${snip.description}</p>
                         <div class="snippet-resume-like">
                             <img src="/static/img/like.png" alt="">
-                            <p>${snip.like}</p>
+                            <p>${snip.likes}</p>
                         </div>
                         <div class="snippet-resume-deslike">
                             <img src="/static/img/deslike.png" alt="">
@@ -166,8 +166,8 @@ document.addEventListener("DOMContentLoaded", async function () {
 
         function logout() {
             localStorage.removeItem("user");
-            renderHeader();
-        }
+            window.location.href = "home.html"
+      }
 
         renderHeader()
 </script>
