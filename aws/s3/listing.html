@@ -77,15 +77,15 @@ document.addEventListener("DOMContentLoaded", async function () {
                     <div class="snippet-resume" data-language="${snip.language}">
                         <div class="snippet-header">
                             <h3 class="snippet-resume-title">${snip.title}</h3>
-                            <img src="/static/img/${snip.language}.png" alt="${snip.language}" class="snippet-resume-language-logo">
+                            <img src="/img/${snip.language}.png" alt="${snip.language}" class="snippet-resume-language-logo">
                         </div>
                         <p class="snippet-resume-description">${snip.description}</p>
                         <div class="snippet-resume-like">
-                            <img src="/static/img/like.png" alt="">
+                            <img src="/img/like.png" alt="">
                             <p>${snip.likes}</p>
                         </div>
                         <div class="snippet-resume-deslike">
-                            <img src="/static/img/deslike.png" alt="">
+                            <img src="/img/deslike.png" alt="">
                             <p>${snip.deslike}</p>
                         </div>
                     </div>
@@ -107,34 +107,44 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
 
     const searchForm = document.querySelector(".search-container");
-    const searchInput = searchForm.querySelector("input[name='search']");
+    const searchInput = searchForm.querySelector("input[type='text']");
 
-    // 1️⃣ Pega a query da URL e preenche o input
+    // 1️⃣ Lê parâmetros da URL (search e filter)
     const urlParams = new URLSearchParams(window.location.search);
     const query = urlParams.get("search");
-    if(query) {
+    const filter = urlParams.get("filter");
+
+    // --- 🔍 Se tiver parâmetro de busca ---
+    if (query) {
         searchInput.value = query;
         title.textContent = "Pesquisa: " + query;
-        fetchSnippets({ search: query });
-    } else {
-        fetchSnippets(); // sem query, lista tudo
+        await fetchSnippets({ search: query });
+    }
+    // --- 🧩 Se tiver filtro de linguagem ---
+    else if (filter) {
+        title.textContent = "Linguagem: " + filter;
+        await fetchSnippets({ filter_language: filter });
+    }
+    // --- 📋 Caso contrário, lista todos ---
+    else {
+        fetchSnippets();
     }
 
     // 2️⃣ Listener do formulário de busca
     searchForm.addEventListener("submit", async function (e) {
         e.preventDefault();
         const search = searchInput.value.trim();
-        if(!search) {
+        if (!search) {
             fetchSnippets();
             return;
         }
-        // Atualiza a URL para ficar consistente
+        // Atualiza a URL e refaz busca
         window.history.replaceState({}, "", `listing.html?search=${encodeURIComponent(search)}`);
         title.textContent = "Pesquisa: " + search;
-        fetchSnippets({ search: search });
+        fetchSnippets({ search });
     });
 
-    // 3️⃣ Filtros de linguagem
+    // 3️⃣ Filtros de linguagem (botões internos)
     filterForms.forEach(form => {
         form.addEventListener("submit", async function (e) {
             e.preventDefault();
@@ -145,32 +155,33 @@ document.addEventListener("DOMContentLoaded", async function () {
     });
 });
 
-        function renderHeader() {
-            const user = JSON.parse(localStorage.getItem("user"));
-            const headerButtons = document.getElementById("auth-buttons");
-            headerButtons.innerHTML = "";
+function renderHeader() {
+    const user = JSON.parse(localStorage.getItem("user"));
+    const headerButtons = document.getElementById("auth-buttons");
+    headerButtons.innerHTML = "";
 
-            if (user) {
-                headerButtons.innerHTML = `
-                    <span style="margin-right:10px;">Olá, ${user.name}</span>
-                    <a href="snippet-form.html"><button>Criar Snippet</button></a>
-                    <button onclick="logout()">Logout</button>
-                `;
-            } else {
-                headerButtons.innerHTML = `
-                    <a href="login-form.html"><button>Login</button></a>
-                    <a href="register-form.html"><button>Registrar</button></a>
-                `;
-            }
-        }
+    if (user) {
+        headerButtons.innerHTML = `
+            <span style="margin-right:10px;">Olá, ${user.name}</span>
+            <a href="snippet-form.html"><button>Criar Snippet</button></a>
+            <button onclick="logout()">Logout</button>
+        `;
+    } else {
+        headerButtons.innerHTML = `
+            <a href="login-form.html"><button>Login</button></a>
+            <a href="register-form.html"><button>Registrar</button></a>
+        `;
+    }
+}
 
-        function logout() {
-            localStorage.removeItem("user");
-            window.location.href = "home.html"
-      }
+function logout() {
+    localStorage.removeItem("user");
+    window.location.href = "home.html";
+}
 
-        renderHeader()
+renderHeader();
 </script>
+
 
 
 </html>

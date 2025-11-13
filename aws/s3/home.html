@@ -117,10 +117,10 @@
             renderHeader();
         }
 
-        // --- Filtro e pesquisa (simples) ---
-        function filterByLanguage(lang) {
+        function filterLanguage(lang) {
             window.location.href = `listing.html?filter=${lang}`;
         }
+
         // pesquisa
         document.getElementById("searchForm").addEventListener("submit", function(event) {
             event.preventDefault();
